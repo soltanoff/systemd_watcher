@@ -1,5 +1,6 @@
-import subprocess
 import re
+import subprocess
+
 
 class SYSTEMCTL_COMMANDS:
     STATUS_ALL = 'systemctl status'
@@ -39,7 +40,6 @@ class ServiceMonitor:
 
     def set_stop_service(self, service_name):
         return self.__exec(SYSTEMCTL_COMMANDS.STOP.format(service_name))
-
 
 
 if __name__ == '__main__':

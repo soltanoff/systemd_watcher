@@ -25,7 +25,7 @@ SECRET_KEY = '$sgf3on23ng!7^mhhwe$71ar6=slhbp@19g5!d_=(q@s2tli_='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -54,7 +54,7 @@ ROOT_URLCONF = 'systemd_watcher.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['generics/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,9 +103,16 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGES = (
+    ('en', 'English'),
+    ('ru', 'Russian'),
+)
 
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'ru-ru'
+
+TIME_ZONE = 'Europe/Moscow'
+
+DATETIME_FORMAT = '%d-%m-%Y %H:%M:S'
 
 USE_I18N = True
 
@@ -117,4 +124,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+MEDIA_URL = "/media/"
+
 STATIC_URL = '/static/'
+
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]

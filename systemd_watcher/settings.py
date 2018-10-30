@@ -111,7 +111,7 @@ LANGUAGES = (
     ('ru', 'Russian'),
 )
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Europe/Moscow'
 

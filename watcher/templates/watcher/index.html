@@ -78,9 +78,9 @@
                     </thead>
                     <tbody>
                     {% for service in services %}
-                    <tr class="row{{ forloop.counter }}">
+                    <tr class="row{% if forloop.counter0|divisibleby:2 %}1{% else %}2{% endif %}">
                         <th class="field-name" valign="center">{{ service.name }}</th>
-                        <td class="field-description nowrap" valign="center">{{ service.description }}</td>
+                        <td class="field-description" valign="center">{{ service.description|linebreaksbr }}</td>
                         <td class="field-status" valign="center">{{ service.status }}</td>
                         {% if user.is_staff %}
                         <td class="field-start" valign="center">

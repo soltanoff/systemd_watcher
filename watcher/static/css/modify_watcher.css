@@ -8,6 +8,14 @@ td, th {
     font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
 }
 
+.field-name {
+    vertical-align: middle;
+}
+
+.field-description {
+    text-align: left;
+}
+
 #changelist-search label {
     line-height: unset;
     align-self: center;

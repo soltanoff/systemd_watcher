@@ -17,15 +17,15 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
-
-from api.routers import router as api_routes
+from rest_framework.schemas import get_schema_view
 
 urlpatterns = [
     url(r'', include('watcher.urls')),
     url(r'^accounts/', include('account.urls')),
     url(r'^manage/', admin.site.urls),
     url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^api/', include(api_routes.urls)),
+    url(r'^schema/', get_schema_view(title='Test API')),
+    url(r'^api/', include('api.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 

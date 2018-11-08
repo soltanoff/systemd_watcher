@@ -49,12 +49,8 @@ class ServiceMonitor:
         for status in filter(bool, map(self.__get_service_status, self.__get_service_list())):
             yield self.extract_data(status)
 
-    def iter_failed_list(self):
-        for status in filter(bool, map(self.__get_service_status, self.__get_service_list())):
-            yield self.extract_data(status)
-
-    def get_failed_list(self):
-        return list(self.iter_failed_list())
+    def get_failed_services(self):
+        return self.__get_failed_services()
 
     def get_service_list(self):
         return list(self.iter_service_list())
@@ -75,3 +71,4 @@ class ServiceMonitor:
 if __name__ == '__main__':
     monitor = ServiceMonitor()
     print(monitor.get_service_list())
+    print(monitor.get_failed_services())

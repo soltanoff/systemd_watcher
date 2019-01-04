@@ -1,3 +1,4 @@
+import operator
 import re
 import subprocess
 
@@ -53,7 +54,7 @@ class ServiceMonitor:
         return self.__get_failed_services()
 
     def get_service_list(self):
-        return list(self.iter_service_list())
+        return list(sorted(self.iter_service_list(), key=operator.itemgetter('name')))
 
     def get_service_status(self, service_name):
         return self.extract_data(self.__get_service_status(service_name))

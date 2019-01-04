@@ -1,100 +1,14 @@
-{% extends "base.html" %}
-
-{% load i18n admin_urls static admin_list %}
-
-{% block extrastyle %}
-<link rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous">
-{{ block.super }}
-<link rel="stylesheet" type="text/css" href="{% static 'admin/css/changelists.css' %}"/>
-{% if cl.formset %}
-<link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}"/>
-{% endif %}
-{% if cl.formset or action_form %}
-<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
-{% endif %}
-{{ media.css }}
-{% endblock %}
-
-{% block extrahead %}
-{{ block.super }}
-{{ media.js }}
-{% endblock %}
-
-{% block userlinks %}
-{% if user.is_staff %} <a href="{% url 'admin:index' %}">{% trans "Manage" %}</a> / {% endif %}
-<a href="{% url 'account:logout' %}">{% trans "Log out" %}</a>
-{% endblock %}
-
-{% load staticfiles %}
-
+{% extends "head_scripts.html" %}
+{% load i18n admin_urls static admin_list staticfiles %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/modify_watcher.css' %}">
-<div id="starting">
+<div id="app">
     <h1>Service list <input type="button" value="{% trans 'Show failed services' %}" v-on:click="showFailedServices()"/>
     </h1>
     <div id="content-main">
         <div class="module" id="changelist">
-            <div id="toolbar">
-                <form id="changelist-search" method="get">
-                    <div><!-- DIV needed for valid HTML -->
-                        <label for="searchbar"><img src="{% static 'admin/img/search.svg' %}" alt="Search"/></label>
-                        <input type="text" style="width:auto; box-sizing: unset;" name="q" value="{{ search }}"
-                               id="searchbar" autofocus/>
-                        <input type="submit" value="{% trans 'Search' %}"/>
-                    </div>
-                </form>
-            </div>
-            <div class="results">
-                <table id="result_list" style="margin:auto; width:100%; height:100%;">
-                    <thead>
-                    <tr>
-                        <th scope="col" class="sortable column-name">
-                            <div class="text">{% trans "Name" %}</div>
-                            <div class="clear"></div>
-                        </th>
-                        <th scope="col" class="sortable column-description">
-                            <div class="text">{% trans "Description" %}</div>
-                            <div class="clear"></div>
-                        </th>
-                        <th scope="col" class="sortable column-status">
-                            <div class="text">{% trans "Status" %}</div>
-                            <div class="clear"></div>
-                        </th>
-                        {% if user.is_staff %}
-                        <th scope="col" class="sortable column-start">
-                            <div class="text">{% trans "start / restart" %}</div>
-                            <div class="clear"></div>
-                        </th>
-                        <th scope="col" class="sortable column-stop">
-                            <div class="text">{% trans "Stop" %}</div>
-                            <div class="clear"></div>
-                        </th>
-                        {% endif %}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for service in services %}
-                    <tr class="row{% if forloop.counter0|divisibleby:2 %}1{% else %}2{% endif %}">
-                        <th class="field-name" valign="center">{{ service.name }}</th>
-                        <td class="field-description" valign="center">{{ service.description|linebreaksbr }}</td>
-                        <td class="field-status" valign="center">{{ service.status }}</td>
-                        {% if user.is_staff %}
-                        <td class="field-start" valign="center">
-                            <a href="{% url 'api:start_services' %}" id="start">START</a>
-                        </td>
-                        <td class="field-stop" valign="center">
-                            <a href="{% url 'api:stop_services' %}" id="stop">STOP</a>
-                        </td>
-                        {% endif %}
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            <p class="paginator">{% trans "Count of services" %}: {{ services|length }}</p>
+            {% include "toolbar.html" %}
+            {% include "table.html" %}
         </div>
     </div>
     {% include "modal_window.html" with id="showFailedServices" title="FAILED SERVICES" %}

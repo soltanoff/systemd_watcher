@@ -1,0 +1,50 @@
+{% load i18n admin_urls static admin_list staticfiles %}
+
+<div class="results">
+    <table id="result_list" style="margin:auto; width:100%; height:100%;">
+        <thead>
+        <tr>
+            <th scope="col" class="sortable column-name">
+                <div class="text">{% trans "Name" %}</div>
+                <div class="clear"></div>
+            </th>
+            <th scope="col" class="sortable column-description">
+                <div class="text">{% trans "Description" %}</div>
+                <div class="clear"></div>
+            </th>
+            <th scope="col" class="sortable column-status">
+                <div class="text">{% trans "Status" %}</div>
+                <div class="clear"></div>
+            </th>
+            {% if user.is_staff %}
+            <th scope="col" class="sortable column-start">
+                <div class="text">{% trans "start / restart" %}</div>
+                <div class="clear"></div>
+            </th>
+            <th scope="col" class="sortable column-stop">
+                <div class="text">{% trans "Stop" %}</div>
+                <div class="clear"></div>
+            </th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="service in services">
+            <th class="field-name" valign="center">${ service.name }</th>
+            <td class="field-description" valign="center">
+                <pre>${ service.description }</pre>
+            </td>
+            <td class="field-status" valign="center">${ service.status }</td>
+            {% if user.is_staff %}
+            <td class="field-start" valign="center">
+                <a href="{% url 'api:start_services' %}" id="start">START</a>
+            </td>
+            <td class="field-stop" valign="center">
+                <a href="{% url 'api:stop_services' %}" id="stop">STOP</a>
+            </td>
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+</div>
+<p class="paginator">{% trans "Count of services" %}: ${services.length}</p>

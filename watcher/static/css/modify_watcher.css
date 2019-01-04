@@ -39,6 +39,17 @@ td, th {
     cursor: pointer;
 }
 
+.h1, input[type=button] {
+    background: #ba2121;
+    font-size: 14px;
+}
+
+.h1, input[type=button]:focus,
+.h1, input[type=button]:hover,
+.h1, input[type=button]:active {
+    background: #a41515;
+}
+
 #changelist #toolbar {
     padding: 8px 10px;
     margin-bottom: 15px;

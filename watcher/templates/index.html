@@ -1,8 +1,12 @@
-{% extends "watcher/base.html" %}
+{% extends "base.html" %}
 
 {% load i18n admin_urls static admin_list %}
 
 {% block extrastyle %}
+<link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous">
 {{ block.super }}
 <link rel="stylesheet" type="text/css" href="{% static 'admin/css/changelists.css' %}"/>
 {% if cl.formset %}
@@ -12,12 +16,6 @@
 <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
 {% endif %}
 {{ media.css }}
-{% if not actions_on_top and not actions_on_bottom %}
-<style>
-      #changelist table thead th:first-child {width: inherit}
-
-</style>
-{% endif %}
 {% endblock %}
 
 {% block extrahead %}
@@ -34,20 +32,21 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/modify_watcher.css' %}">
-<h1>Service list</h1>
-<div id="content-main">
-    <div class="module" id="changelist">
-        <div id="toolbar">
-            <form id="changelist-search" method="get">
-                <div><!-- DIV needed for valid HTML -->
-                    <label for="searchbar"><img src="{% static 'admin/img/search.svg' %}" alt="Search"/></label>
-                    <input type="text" style="width:auto" name="q" value="{{ search }}" id="searchbar" autofocus/>
-                    <input type="submit" value="{% trans 'Search' %}"/>
-                </div>
-            </form>
-        </div>
-
-        <form id="changelist-form" method="post" novalidate>{% csrf_token %}
+<div id="starting">
+    <h1>Service list <input type="button" value="{% trans 'Show failed services' %}" v-on:click="showFailedServices()"/>
+    </h1>
+    <div id="content-main">
+        <div class="module" id="changelist">
+            <div id="toolbar">
+                <form id="changelist-search" method="get">
+                    <div><!-- DIV needed for valid HTML -->
+                        <label for="searchbar"><img src="{% static 'admin/img/search.svg' %}" alt="Search"/></label>
+                        <input type="text" style="width:auto; box-sizing: unset;" name="q" value="{{ search }}"
+                               id="searchbar" autofocus/>
+                        <input type="submit" value="{% trans 'Search' %}"/>
+                    </div>
+                </form>
+            </div>
             <div class="results">
                 <table id="result_list" style="margin:auto; width:100%; height:100%;">
                     <thead>
@@ -84,10 +83,10 @@
                         <td class="field-status" valign="center">{{ service.status }}</td>
                         {% if user.is_staff %}
                         <td class="field-start" valign="center">
-                            <a href="" id="start">{{ service.start }}</a>
+                            <a href="{% url 'api:start_services' %}" id="start">START</a>
                         </td>
                         <td class="field-stop" valign="center">
-                            <a href="" id="stop">{{ service.stop }}</a>
+                            <a href="{% url 'api:stop_services' %}" id="stop">STOP</a>
                         </td>
                         {% endif %}
                     </tr>
@@ -96,8 +95,10 @@
                 </table>
             </div>
             <p class="paginator">{% trans "Count of services" %}: {{ services|length }}</p>
-        </form>
+        </div>
     </div>
+    {% include "modal_window.html" with id="showFailedServices" title="FAILED SERVICES" %}
 </div>
 <br class="clear"/>
+{% include "body_scripts.html" %}
 {% endblock %}

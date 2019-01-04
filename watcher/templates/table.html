@@ -31,9 +31,10 @@
         <tbody>
         <tr v-for="service in services">
             <th class="field-name" valign="center">${ service.name }</th>
-            <td class="field-description" valign="center">
-                <pre>${ service.description }</pre>
-            </td>
+            <!-- TODO: soltaanoff: sroll for <code> -->
+            <td class="field-description" valign="center"><code>
+                <template v-for="line in service.description.split('\n')">${ line }<br></template>
+            </code></td>
             <td class="field-status" valign="center">${ service.status }</td>
             {% if user.is_staff %}
             <td class="field-start" valign="center">

@@ -1,4 +1,4 @@
-from rest_framework import permissions, authentication
+from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
@@ -6,7 +6,12 @@ from rest_framework.views import APIView
 from service_monitor import ServiceMonitor
 
 
+# TODO: soltanoff: use authentication.TokenAuthentication
+
+
 class ApiRoot(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request, format=None):
         return Response({
             'Services': reverse('api:services', request=request, format=format),
@@ -15,22 +20,27 @@ class ApiRoot(APIView):
 
 
 class ListServices(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request, format=None):
         return Response(ServiceMonitor.get_service_list())
 
 
 class FailedServices(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request, format=None):
         return Response(ServiceMonitor.get_failed_services())
 
 
 class ServiceStatus(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request, service_name, format=None):
         return Response(ServiceMonitor.get_service_status(service_name))
 
 
 class StartService(APIView):
-    authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAdminUser,)
 
     def post(self, request, service_name, format=None):
@@ -38,7 +48,6 @@ class StartService(APIView):
 
 
 class StopService(APIView):
-    authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAdminUser,)
 
     def post(self, request, service_name, format=None):

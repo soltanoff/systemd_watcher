@@ -11,7 +11,6 @@ class ApiRoot(APIView):
         return Response({
             'Services': reverse('api:services', request=request, format=format),
             'Failed services': reverse('api:failed_services', request=request, format=format),
-            # 'Service status': reverse('api:service_status', request=request, format=format),
         })
 
 

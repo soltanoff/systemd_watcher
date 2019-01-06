@@ -11,7 +11,8 @@
             {% include "table.html" %}
         </div>
     </div>
-    {% include "modal_window.html" with id="showFailedServices" title="FAILED SERVICES" %}
+    {% include "failed_services_modal_window.html" with id="showFailedServices" title="FAILED SERVICES" %}
+    {% include "service_status_modal_window.html" with id="showServiceStatus" title="SERVICE STATUS" %}
 </div>
 <br class="clear"/>
 {% include "body_scripts.html" %}

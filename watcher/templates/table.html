@@ -38,10 +38,12 @@
             <td class="field-status" valign="center">${ service.status }</td>
             {% if user.is_staff %}
             <td class="field-start" valign="center">
-                <a href="{% url 'api:start_services' %}" id="start">START</a>
+                <input type="submit" value="{% trans 'START' %}" v-on:click="startService(service.service_name)"/>
+                <p></p>
+                <input type="submit" value="{% trans 'RESTART' %}" v-on:click="restartService(service.service_name)"/>
             </td>
             <td class="field-stop" valign="center">
-                <a href="{% url 'api:stop_services' %}" id="stop">STOP</a>
+                <input type="button" value="{% trans 'STOP' %}" v-on:click="stopService(service.service_name)"/>
             </td>
             {% endif %}
         </tr>

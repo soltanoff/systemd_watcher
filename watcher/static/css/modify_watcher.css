@@ -12,6 +12,18 @@ td, th {
     vertical-align: middle;
 }
 
+.field-start {
+    vertical-align: middle;
+}
+
+.field-restart {
+    vertical-align: middle;
+}
+
+.field-stop {
+    vertical-align: middle;
+}
+
 .field-description {
     text-align: left;
 }
@@ -57,4 +69,8 @@ td, th {
     border-bottom: 1px solid #eee;
     background: #f8f8f8;
     color: #966;
+}
+
+#header {
+    height: unset;
 }

@@ -19,11 +19,18 @@ class ApiRoot(APIView):
         })
 
 
-class ListServices(APIView):
+class EnabledServices(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
-        return Response(ServiceMonitor.get_service_list())
+        return Response(ServiceMonitor.get_enabled_services())
+
+
+class ActiveServices(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, format=None):
+        return Response(ServiceMonitor.get_active_services())
 
 
 class FailedServices(APIView):
@@ -44,11 +51,11 @@ class StartService(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
     def post(self, request, service_name, format=None):
-        return Response(ServiceMonitor.set_restart_service(service_name))
+        return Response(ServiceMonitor.restart_service(service_name))
 
 
 class StopService(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
     def post(self, request, service_name, format=None):
-        return Response(ServiceMonitor.set_stop_service(service_name))
+        return Response(ServiceMonitor.stop_service(service_name))

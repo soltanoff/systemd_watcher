@@ -22,6 +22,15 @@ new Vue({
             console.log(err);
           })
     },
+    getActiveServices: function() {
+      this.$http.get('/api/v1/services/active/')
+          .then((response) => {
+            this.services = response.data;
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+    },
     showFailedServices: function() {
       this.$http.get('/api/v1/services/failed/')
           .then((response) => {

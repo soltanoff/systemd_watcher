@@ -15,12 +15,7 @@ new Vue({
     },
     watch: {
         pickedServices: function(value) {
-            if (value == 'enabled') {
-                this.getServices();
-            }
-            else {
-                this.getActiveServices();
-            }
+            this.getServicesByPickedRadioButton(value);
         }
     },
     methods: {
@@ -48,6 +43,14 @@ new Vue({
                 console.log(err);
             })
         },
+        getServicesByPickedRadioButton: function(value) {
+            if (value == 'enabled') {
+                this.getServices();
+            }
+            else {
+                this.getActiveServices();
+            }
+        },
         showFailedServices: function() {
             this.$http.get('/api/v1/services/failed/')
             .then((response) => {
@@ -63,13 +66,13 @@ new Vue({
             this.$http.post('/api/v1/service/start/' + service + '/')
             .then((response) => {
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" started successful!";
-                this.getServices();
+                this.getServicesByPickedRadioButton(pickedServices);
                 $("#showServiceStatus").modal('show');
             })
             .catch((err) => {
                 console.log(err);
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" not started!<br>Error: " + err;
-                this.getServices();
+                this.getServicesByPickedRadioButton(pickedServices);
                 $("#showServiceStatus").modal('show');
             })
         },
@@ -78,13 +81,13 @@ new Vue({
             this.$http.post('/api/v1/service/restart/' + service + '/')
             .then((response) => {
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" restarted successful!";
-                this.getServices();
+                this.getServicesByPickedRadioButton(pickedServices);
                 $("#showServiceStatus").modal('show');
             })
             .catch((err) => {
                 console.log(err);
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" not restarted!<br>Error: " + err;
-                this.getServices();
+                this.getServicesByPickedRadioButton(pickedServices);
                 $("#showServiceStatus").modal('show');
             })
         },
@@ -93,13 +96,13 @@ new Vue({
             this.$http.post('/api/v1/service/stop/' + service + '/')
             .then((response) => {
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" stopped!";
-                this.getServices();
+                this.getServicesByPickedRadioButton(pickedServices);
                 $("#showServiceStatus").modal('show');
             })
             .catch((err) => {
                 console.log(err);
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" not stopped!<br>Error: " + err;
-                this.getServices();
+                this.getServicesByPickedRadioButton(pickedServices);
                 $("#showServiceStatus").modal('show');
             })
         },

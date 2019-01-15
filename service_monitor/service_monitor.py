@@ -16,7 +16,7 @@ class SYSTEMCTL_COMMANDS:
 class ServiceMonitor:
     __SERVICE_PATTERN = re.compile("─(.*\.service)")
     __NAME_PATTERN = re.compile(r"^●?\s?.*\s-\s(.*)\n")
-    __SERVICE_NAME_PATTERN = re.compile(r"^●?\s?(.*)\s-?")
+    __SERVICE_NAME_PATTERN = re.compile(r"^●?\s?(.*\.service)\s-?")
     __STATUS_PATTERN = re.compile(r"Active:\s(.*)\n")
     __DESCRIPTION_PATTERN = re.compile(
         r"(^\s+Loaded:\s.*\n|^\s+Process:\s.*\n|^\s+Main PID:\s.*\n|^\s+CGroup:\s.*(\n.*)+\n\n)",

@@ -9,4 +9,11 @@
             <input type="submit" value="{% trans 'Search' %}"/>
         </div>
     </form>
+    <div>
+        <input type="radio" id="one" value="enabled" v-model="pickedServices">
+        <label for="one">{% trans 'All services (enabled)' %}</label>
+        <br>
+        <input type="radio" id="two" value="active" v-model="pickedServices">
+        <label for="two">{% trans 'Active services' %}</label>
+    </div>
 </div>

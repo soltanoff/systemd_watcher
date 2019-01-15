@@ -66,13 +66,13 @@ new Vue({
             this.$http.post('/api/v1/service/start/' + service + '/')
             .then((response) => {
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" started successful!";
-                this.getServicesByPickedRadioButton(pickedServices);
+                this.getServicesByPickedRadioButton(this.pickedServices);
                 $("#showServiceStatus").modal('show');
             })
             .catch((err) => {
                 console.log(err);
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" not started!<br>Error: " + err;
-                this.getServicesByPickedRadioButton(pickedServices);
+                this.getServicesByPickedRadioButton(this.pickedServices);
                 $("#showServiceStatus").modal('show');
             })
         },
@@ -81,13 +81,13 @@ new Vue({
             this.$http.post('/api/v1/service/restart/' + service + '/')
             .then((response) => {
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" restarted successful!";
-                this.getServicesByPickedRadioButton(pickedServices);
+                this.getServicesByPickedRadioButton(this.pickedServices);
                 $("#showServiceStatus").modal('show');
             })
             .catch((err) => {
                 console.log(err);
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" not restarted!<br>Error: " + err;
-                this.getServicesByPickedRadioButton(pickedServices);
+                this.getServicesByPickedRadioButton(this.pickedServices);
                 $("#showServiceStatus").modal('show');
             })
         },
@@ -96,13 +96,13 @@ new Vue({
             this.$http.post('/api/v1/service/stop/' + service + '/')
             .then((response) => {
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" stopped!";
-                this.getServicesByPickedRadioButton(pickedServices);
+                this.getServicesByPickedRadioButton(this.pickedServices);
                 $("#showServiceStatus").modal('show');
             })
             .catch((err) => {
                 console.log(err);
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" not stopped!<br>Error: " + err;
-                this.getServicesByPickedRadioButton(pickedServices);
+                this.getServicesByPickedRadioButton(this.pickedServices);
                 $("#showServiceStatus").modal('show');
             })
         },

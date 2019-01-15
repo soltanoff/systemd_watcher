@@ -25,20 +25,26 @@ new Vue({
     },
     methods: {
         getServices: function() {
+            this.loading = true;
             this.$http.get('/api/v1/services/')
             .then((response) => {
+                this.loading = false;
                 this.services = response.data;
             })
             .catch((err) => {
+                this.loading = false;
                 console.log(err);
             })
         },
         getActiveServices: function() {
+            this.loading = true;
             this.$http.get('/api/v1/services/active/')
             .then((response) => {
+                this.loading = false;
                 this.services = response.data;
             })
             .catch((err) => {
+                this.loading = false;
                 console.log(err);
             })
         },
@@ -53,6 +59,7 @@ new Vue({
             })
         },
         startService: function(service) {
+            this.loading = true;
             this.$http.post('/api/v1/service/start/' + service + '/')
             .then((response) => {
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" started successful!";
@@ -67,6 +74,7 @@ new Vue({
             })
         },
         restartService: function(service) {
+            this.loading = true;
             this.$http.post('/api/v1/service/restart/' + service + '/')
             .then((response) => {
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" restarted successful!";
@@ -81,6 +89,7 @@ new Vue({
             })
         },
         stopService: function(service) {
+            this.loading = true;
             this.$http.post('/api/v1/service/stop/' + service + '/')
             .then((response) => {
                 this.serviceStatus = "Service \"<b>" + service + "</b>\" stopped!";

@@ -13,6 +13,7 @@
     </div>
     {% include "failed_services_modal_window.html" with id="showFailedServices" title="FAILED SERVICES" %}
     {% include "service_status_modal_window.html" with id="showServiceStatus" title="SERVICE STATUS" %}
+    <div class="loading" v-if="loading">Loading&#8230;</div>
 </div>
 <br class="clear"/>
 {% include "body_scripts.html" %}

@@ -30,20 +30,25 @@
         </thead>
         <tbody>
         <tr v-for="service in services">
-            <th class="field-name" valign="center">${ service.name }</th>
+            <th class="field-name">${ service.name }</th>
             <!-- TODO: soltaanoff: sroll for <code> -->
-            <td class="field-description" valign="center"><code>
+            <td class="field-description"><code>
                 <template v-for="line in service.description.split('\n')">${ line }<br></template>
             </code></td>
-            <td class="field-status" valign="center">${ service.status }</td>
-            {% if user.is_staff %}
-            <td class="field-start" valign="center">
-                <input type="submit" value="{% trans 'START' %}" v-on:click="startService(service.service_name)"/>
-                <p></p>
-                <input type="submit" value="{% trans 'RESTART' %}" v-on:click="restartService(service.service_name)"/>
+            <td class="field-status">
+                <p id="warn" v-if="!(service.status.startsWith('active'))">${ service.status }</p>
+                <p v-if="(service.status.startsWith('active'))">${ service.status }</p>
             </td>
-            <td class="field-stop" valign="center">
-                <input type="button" value="{% trans 'STOP' %}" v-on:click="stopService(service.service_name)"/>
+            {% if user.is_staff %}
+            <td class="field-start">
+                <input type="submit" value="{% trans 'START' %}" v-if="!(service.status.startsWith('active'))"
+                       v-on:click="startService(service.service_name)"/>
+                <input type="submit" value="{% trans 'RESTART' %}" v-if="service.status.startsWith('active')"
+                       v-on:click="restartService(service.service_name)"/>
+            </td>
+            <td class="field-stop">
+                <input type="button" value="{% trans 'STOP' %}" v-if="!(service.status.startsWith('inactive'))"
+                       v-on:click="stopService(service.service_name)"/>
             </td>
             {% endif %}
         </tr>

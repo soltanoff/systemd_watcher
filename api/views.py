@@ -33,6 +33,13 @@ class ActiveServices(APIView):
         return Response(ServiceMonitor.get_active_services())
 
 
+class InactiveServices(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, format=None):
+        return Response(ServiceMonitor.get_inactive_services())
+
+
 class FailedServices(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 

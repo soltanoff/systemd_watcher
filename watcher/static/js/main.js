@@ -43,12 +43,29 @@ new Vue({
                 console.log(err);
             })
         },
+        getInactiveServices: function() {
+            this.loading = true;
+            this.$http.get('/api/v1/services/inactive/')
+            .then((response) => {
+                this.loading = false;
+                this.services = response.data;
+            })
+            .catch((err) => {
+                this.loading = false;
+                console.log(err);
+            })
+        },
         getServicesByPickedRadioButton: function(value) {
-            if (value == 'enabled') {
-                this.getServices();
-            }
-            else {
-                this.getActiveServices();
+            switch(value) {
+                case 'active':
+                    this.getActiveServices();
+                    break;
+                case 'inactive':
+                    this.getInactiveServices();
+                    break;
+                default:
+                    this.getServices();
+                    break;
             }
         },
         showFailedServices: function() {

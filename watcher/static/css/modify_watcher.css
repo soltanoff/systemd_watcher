@@ -21,7 +21,7 @@ td, th {
     vertical-align: middle;
 }
 
-.field-start {
+.field-actions {
     vertical-align: middle;
 }
 
@@ -87,6 +87,11 @@ td, th {
 .h1, input[type=button]:hover,
 .h1, input[type=button]:active {
     background: #a41515;
+}
+
+#changelist table input {
+    margin-top: 10%;
+    vertical-align: baseline;
 }
 
 #changelist #toolbar {

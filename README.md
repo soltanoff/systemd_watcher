@@ -14,5 +14,9 @@ and daemons to manage simple network configuration, network time synchronization
 ## Screens
 ##### Example #1: Main page
 ![Main page](images/demo_1.png)
-##### Example #2: Failed services
-![Failed services](images/demo_2.png)
+##### Example #2: Inactive services
+![Main page](images/demo_2.png)
+##### Example #3: Failed services
+![Main page](images/demo_3.png)
+##### Example #4: Failed services
+![Failed services](images/demo_4.png)

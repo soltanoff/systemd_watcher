@@ -58,6 +58,9 @@ class ServiceMonitor:
     def get_active_services(self):
         return self.__extract_data(re.findall(self.__SERVICE_PATTERN, self.__exec(SYSTEMCTL_COMMANDS.STATUS_ALL)))
 
+    def get_inactive_services(self):
+        return list(filter(lambda x: 'inactive' in x['status'], self.get_enabled_services()))
+
     def get_failed_services(self):
         return self.__exec(SYSTEMCTL_COMMANDS.FAILED_SERVICES)
 
@@ -66,5 +69,6 @@ if __name__ == '__main__':
     monitor = ServiceMonitor()
     print(monitor.get_service_status('mysql'))
     print(monitor.get_active_services())
+    print(monitor.get_inactive_services())
     print(monitor.get_enabled_services())
     print(monitor.get_failed_services())

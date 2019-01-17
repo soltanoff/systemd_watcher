@@ -1,4 +1,4 @@
-{% extends "head_scripts.html" %}
+{% extends "extrastyle.html" %}
 {% load i18n admin_urls static admin_list staticfiles %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/modify_watcher.css' %}">
@@ -7,12 +7,31 @@
     </h1>
     <div id="content-main">
         <div class="module" id="changelist">
-            {% include "toolbar.html" %}
-            {% include "table.html" %}
+            <div id="toolbar">
+                <form id="changelist-search" method="get">
+                    <div><!-- DIV needed for valid HTML -->
+                        <label for="searchbar"><img src="{% static 'admin/img/search.svg' %}" alt="Search"/></label>
+                        <input type="text" style="width:auto; box-sizing: unset;" name="q" value="{{ search }}"
+                               id="searchbar" autofocus/>
+                        <input type="submit" value="{% trans 'Search' %}"/>
+                    </div>
+                </form>
+                <div>
+                    <input type="radio" id="one" value="enabled" v-model="pickedServices">
+                    <label for="one">{% trans 'All services (enabled)' %}</label>
+                    <br>
+                    <input type="radio" id="two" value="active" v-model="pickedServices">
+                    <label for="two">{% trans 'Active services' %}</label>
+                    <br>
+                    <input type="radio" id="three" value="inactive" v-model="pickedServices">
+                    <label for="three">{% trans 'Inactive services' %}</label>
+                </div>
+            </div>
+            {% include "main_content.html" %}
         </div>
     </div>
-    {% include "failed_services_modal_window.html" with id="showFailedServices" title="FAILED SERVICES" %}
-    {% include "service_status_modal_window.html" with id="showServiceStatus" title="SERVICE STATUS" %}
+    {% include "modal_windows/failed_services_modal_window.html" with id="showFailedServices" title="FAILED SERVICES" %}
+    {% include "modal_windows/service_status_modal_window.html" with id="showServiceStatus" title="SERVICE STATUS" %}
     <div class="loading" v-if="loading">Loading&#8230;</div>
 </div>
 <br class="clear"/>

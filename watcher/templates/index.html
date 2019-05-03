@@ -1,9 +1,9 @@
 {% extends "extrastyle.html" %}
-{% load i18n admin_urls static admin_list staticfiles %}
+{% load admin_urls static admin_list staticfiles %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/modify_watcher.css' %}">
 <div id="app">
-    <h1>Service list <input type="button" value="{% trans 'Show failed services' %}" v-on:click="showFailedServices()"/>
+    <h1>Service list <input type="button" value="Show failed services" v-on:click="showFailedServices()"/>
     </h1>
     <div id="content-main">
         <div class="module" id="changelist">
@@ -13,18 +13,18 @@
                         <label for="searchbar"><img src="{% static 'admin/img/search.svg' %}" alt="Search"/></label>
                         <input type="text" style="width:auto; box-sizing: unset;" name="q" value="{{ search }}"
                                id="searchbar" autofocus/>
-                        <input type="submit" value="{% trans 'Search' %}"/>
+                        <input type="submit" value="Search"/>
                     </div>
                 </form>
                 <div>
                     <input type="radio" id="one" value="enabled" v-model="pickedServices">
-                    <label for="one">{% trans 'All services (enabled)' %}</label>
+                    <label for="one">All services (enabled)</label>
                     <br>
                     <input type="radio" id="two" value="active" v-model="pickedServices">
-                    <label for="two">{% trans 'Active services' %}</label>
+                    <label for="two">Active services</label>
                     <br>
                     <input type="radio" id="three" value="inactive" v-model="pickedServices">
-                    <label for="three">{% trans 'Inactive services' %}</label>
+                    <label for="three">Inactive services</label>
                 </div>
             </div>
             {% include "main_content.html" %}

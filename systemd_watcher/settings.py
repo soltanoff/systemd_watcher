@@ -62,7 +62,6 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.i18n',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -119,7 +118,7 @@ TIME_ZONE = 'Europe/Moscow'
 
 DATETIME_FORMAT = '%d-%m-%Y %H:%M:S'
 
-USE_I18N = True
+USE_I18N = False
 
 USE_L10N = True
 

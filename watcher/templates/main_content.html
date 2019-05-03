@@ -1,24 +1,24 @@
-{% load i18n admin_urls static admin_list staticfiles %}
+{% load admin_urls static admin_list staticfiles %}
 
 <div class="results">
     <table id="result_list" style="margin:auto; width:100%; height:100%;">
         <thead>
         <tr>
             <th scope="col" class="sortable column-name">
-                <div class="text">{% trans "Name" %}</div>
+                <div class="text">Name</div>
                 <div class="clear"></div>
             </th>
             <th scope="col" class="sortable column-description">
-                <div class="text">{% trans "Description" %}</div>
+                <div class="text">Description</div>
                 <div class="clear"></div>
             </th>
             <th scope="col" class="sortable column-status">
-                <div class="text">{% trans "Status" %}</div>
+                <div class="text">Status</div>
                 <div class="clear"></div>
             </th>
             {% if user.is_staff %}
             <th scope="col" class="sortable column-actions">
-                <div class="text">{% trans "Actions" %}</div>
+                <div class="text">Actions</div>
                 <div class="clear"></div>
             </th>
             {% endif %}
@@ -37,11 +37,11 @@
             </td>
             {% if user.is_staff %}
             <td class="field-actions">
-                <input type="submit" value="{% trans 'START' %}" v-if="!(service.status.startsWith('active'))"
+                <input type="submit" value="START" v-if="!(service.status.startsWith('active'))"
                        v-on:click="startService(service.service_name)"/>
-                <input type="submit" value="{% trans 'RESTART' %}" v-if="service.status.startsWith('active')"
+                <input type="submit" value="RESTART" v-if="service.status.startsWith('active')"
                        v-on:click="restartService(service.service_name)"/>
-                <input type="button" value="{% trans 'STOP' %}" v-if="!(service.status.startsWith('inactive'))"
+                <input type="button" value="STOP" v-if="!(service.status.startsWith('inactive'))"
                        v-on:click="stopService(service.service_name)"/>
             </td>
             {% endif %}
@@ -49,4 +49,4 @@
         </tbody>
     </table>
 </div>
-<p class="paginator">{% trans "Count of services" %}: ${services.length}</p>
+<p class="paginator">Count of services: ${services.length}</p>

@@ -23,7 +23,6 @@ urlpatterns = [
     url(r'', include('watcher.urls')),
     url(r'^accounts/', include('account.urls')),
     url(r'^manage/', admin.site.urls),
-    url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^schema/', get_schema_view(title='Test API')),
     url(r'^api/v1/', include('api.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))

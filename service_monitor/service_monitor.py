@@ -3,7 +3,7 @@ import re
 import subprocess
 
 
-class SYSTEMCTL_COMMANDS:
+class SystemctlCommands:
     ENABLED_SERVICES = "systemctl list-unit-files | grep enabled | grep -Po \'^.*\.service\'"
     FAILED_SERVICES = 'systemctl --failed'
     STATUS_ALL = 'systemctl status'
@@ -28,16 +28,16 @@ class ServiceMonitor:
         return subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).communicate()[0].decode('utf-8')
 
     def start_service(self, service_name):
-        return self.__exec(SYSTEMCTL_COMMANDS.START.format(service_name))
+        return self.__exec(SystemctlCommands.START.format(service_name))
 
     def restart_service(self, service_name):
-        return self.__exec(SYSTEMCTL_COMMANDS.RESTART.format(service_name))
+        return self.__exec(SystemctlCommands.RESTART.format(service_name))
 
     def stop_service(self, service_name):
-        return self.__exec(SYSTEMCTL_COMMANDS.STOP.format(service_name))
+        return self.__exec(SystemctlCommands.STOP.format(service_name))
 
     def get_service_status(self, service):
-        status = self.__exec(SYSTEMCTL_COMMANDS.STATUS.format(service))
+        status = self.__exec(SystemctlCommands.STATUS.format(service))
         if status:
             name = re.findall(self.__NAME_PATTERN, status)
             service_name = re.findall(self.__SERVICE_NAME_PATTERN, status)[0]
@@ -53,16 +53,16 @@ class ServiceMonitor:
         return list(sorted(filter(bool, map(self.get_service_status, services_name)), key=operator.itemgetter('name')))
 
     def get_enabled_services(self):
-        return self.__extract_data(self.__exec(SYSTEMCTL_COMMANDS.ENABLED_SERVICES).split('\n')[:-1:])
+        return self.__extract_data(self.__exec(SystemctlCommands.ENABLED_SERVICES).split('\n')[:-1:])
 
     def get_active_services(self):
-        return self.__extract_data(re.findall(self.__SERVICE_PATTERN, self.__exec(SYSTEMCTL_COMMANDS.STATUS_ALL)))
+        return self.__extract_data(re.findall(self.__SERVICE_PATTERN, self.__exec(SystemctlCommands.STATUS_ALL)))
 
     def get_inactive_services(self):
         return list(filter(lambda x: 'inactive' in x['status'], self.get_enabled_services()))
 
     def get_failed_services(self):
-        return self.__exec(SYSTEMCTL_COMMANDS.FAILED_SERVICES)
+        return self.__exec(SystemctlCommands.FAILED_SERVICES)
 
 
 if __name__ == '__main__':

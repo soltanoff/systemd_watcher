@@ -1,6 +1,6 @@
 new Vue({
     el: '#app',
-    delimiters: ['${','}'],
+    delimiters: ['${', '}'],
     data: {
         loading: false,
         preview: false,

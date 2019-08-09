@@ -23,8 +23,7 @@
 {% block content %}
 {% if form.errors and not form.non_field_errors %}
 <p class="errornote">
-    {% if form.errors.items|length == 1 %}Please correct the error below.{% else %}Please correct the errors below.{%
-    endif %}
+    {% if form.errors.items|length == 1 %}Please correct the error below.{% else %}Please correct the errors below.{% endif %}
 </p>
 {% endif %}
 
@@ -39,10 +38,8 @@
 <div id="content-main">
     {% if user.is_authenticated %}
     <p class="errornote">
-        {% blocktrans trimmed %}
         You are authenticated as {{ username }}, but are not authorized to
         access this page. Would you like to login to a different account?
-        {% endblocktrans %}
     </p>
     {% endif %}
     <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}

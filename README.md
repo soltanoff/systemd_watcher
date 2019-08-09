@@ -11,7 +11,7 @@ include a logging daemon, utilities to control basic system configuration like t
 list of logged-in users and running containers and virtual machines, system accounts, runtime directories and settings, 
 and daemons to manage simple network configuration, network time synchronization, log forwarding, and name resolution.
 
-Create systemd\_watcher\\local\_settings.py with following content (see systemd\_watcher\\local\_settings.example.py):
+Create `systemd_watcher\local_settings.py` with following content (see `systemd_watcher\local_settings.example.py`):
 ```python
 # from .settings import INSTALLED_APPS, MIDDLEWARE
 # Uncomment first line for development server

@@ -1,39 +1,57 @@
-{% extends "extrastyle.html" %}
+{% extends "base.html" %}
+
 {% load admin_urls static admin_list staticfiles %}
+
+{% block extrastyle %}
+<link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous">
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/changelists.css' %}"/>
+{% if cl.formset %}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}"/>
+{% endif %}
+{{ media.css }}
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+{{ media.js }}
+{% endblock %}
+
+{% block userlinks %}
+{% if user.is_staff %} <a href="{% url 'admin:index' %}">Manage</a> / {% endif %}
+<a href="{% url 'account:logout' %}">Log out</a>
+{% endblock %}
+
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/modify_watcher.css' %}">
 <div id="app">
     <h1>Service list <input type="button" value="Show failed services" v-on:click="showFailedServices()"/>
     </h1>
-    <div id="content-main">
-        <div class="module" id="changelist">
-            <div id="toolbar">
-                <form id="changelist-search" method="get">
-                    <div><!-- DIV needed for valid HTML -->
-                        <label for="searchbar"><img src="{% static 'admin/img/search.svg' %}" alt="Search"/></label>
-                        <input type="text" style="width:auto; box-sizing: unset;" name="q" value="{{ search }}"
-                               id="searchbar" autofocus/>
-                        <input type="submit" value="Search"/>
-                    </div>
-                </form>
-                <div>
-                    <input type="radio" id="one" value="enabled" v-model="pickedServices">
-                    <label for="one">All services (enabled)</label>
-                    <br>
-                    <input type="radio" id="two" value="active" v-model="pickedServices">
-                    <label for="two">Active services</label>
-                    <br>
-                    <input type="radio" id="three" value="inactive" v-model="pickedServices">
-                    <label for="three">Inactive services</label>
-                </div>
-            </div>
-            {% include "main_content.html" %}
-        </div>
-    </div>
-    {% include "modal_windows/failed_services_modal_window.html" with id="showFailedServices" title="FAILED SERVICES" %}
-    {% include "modal_windows/service_status_modal_window.html" with id="showServiceStatus" title="SERVICE STATUS" %}
+{% include "main_content.html" %}
+{% include "modal_windows/failed_services_modal_window.html" with id="showFailedServices" title="FAILED SERVICES" %}
+{% include "modal_windows/service_status_modal_window.html" with id="showServiceStatus" title="SERVICE STATUS" %}
     <div class="loading" v-if="loading">Loading&#8230;</div>
-</div>
-<br class="clear"/>
-{% include "body_scripts.html" %}
+    </div>
+    <br class="clear"/>
+    <!-- bootrtap js files -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <!-- vue.js files -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.5"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript">
+        Vue.http.headers.common['X-CSRFToken'] = "{{ csrf_token }}";
+    </script>
 {% endblock %}

@@ -11,12 +11,54 @@ include a logging daemon, utilities to control basic system configuration like t
 list of logged-in users and running containers and virtual machines, system accounts, runtime directories and settings, 
 and daemons to manage simple network configuration, network time synchronization, log forwarding, and name resolution.
 
+Create systemd\_watcher\\local\_settings.py with following content (see systemd\_watcher\\local\_settings.example.py):
+```python
+# from .settings import INSTALLED_APPS, MIDDLEWARE
+# Uncomment first line for development server
+import os
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+SECRET_KEY = 'Your secret key'
+
+DEBUG = True  # False if your want to use in production
+
+ALLOWED_HOSTS = []  # for development
+ALLOWED_HOSTS = ['*']  # for docker-compose
+ALLOWED_HOSTS = ["your-production-domain"]  # for production
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+# if you want to use debug_toolbar (dev server only)
+INSTALLED_APPS.append('debug_toolbar')
+MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+
+```
+
+Fill your database and run Django development server:
+```
+$ pip3 install -r requirements.txt
+$ python3 manage.py migrate
+$ python3 manage.py collectstatic
+```
+
+To run with a docker compose:
+```
+$ docker-compose up
+```
+
 ## Screens
 ##### Example #1: Main page
-![Main page](images/demo_1.png)
+![Main page](assets/demo_1.png)
 ##### Example #2: Inactive services
-![Main page](images/demo_2.png)
+![Main page](assets/demo_2.png)
 ##### Example #3: Failed services
-![Main page](images/demo_3.png)
+![Main page](assets/demo_3.png)
 ##### Example #4: Failed services
-![Failed services](images/demo_4.png)
+![Failed services](assets/demo_4.png)

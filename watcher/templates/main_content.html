@@ -5,9 +5,14 @@
                 <form id="changelist-search" method="get">
                     <div><!-- DIV needed for valid HTML -->
                         <label for="searchbar"><img src="{% static 'admin/img/search.svg' %}" alt="Search"/></label>
-                        <input type="text" style="width:auto; box-sizing: unset;" name="q" value="{{ search }}"
-                               id="searchbar" autofocus/>
-                        <input type="submit" value="Search"/>
+                        <input v-model="search"
+                               type="text"
+                               style="width:auto; box-sizing: unset;"
+                               placeholder="Filter services by name"
+                               value="{{ search }}"
+                               id="searchbar"
+                               autofocus/>
+                        <!--<input type="submit" value="Search"/>-->
                     </div>
                 </form>
                 <div>
@@ -46,7 +51,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="service in services">
+                    <tr v-for="service in filteredServices">
                         <th class="field-name">${ service.name }</th>
                         <!-- TODO: soltaanoff: sroll for <code> -->
                         <td class="field-description"><code>

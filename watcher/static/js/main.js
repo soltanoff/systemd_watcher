@@ -9,6 +9,7 @@ new Vue({
         serviceStatus: '',
         failedServicesData: '',
         services: [],
+        search: '',
     },
     mounted: function() {
         this.getServices();
@@ -17,6 +18,15 @@ new Vue({
         pickedServices: function(value) {
             this.getServicesByPickedRadioButton(value);
         }
+    },
+    computed: {
+        filteredServices: function() {
+            search = this.search.trim().toUpperCase();
+            if (this.search.length > 0)
+                return this.services.filter(service => { return service.name.toUpperCase().includes(search) })
+            else
+                return this.services
+        },
     },
     methods: {
         getServices: function() {

@@ -1,0 +1,17 @@
+# systemd_watcher service file
+
+[Unit]
+Description=systemd watcher
+Wants=network-online.target
+After=network.target network-online.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+PermissionsStartOnly=true
+WorkingDirectory=/usr/local/systemd_watcher
+ExecStart=/usr/bin/python3 manage.py runserver 0.0.0.0:8000
+TimeoutSec=600
+Restart=on-failure
+RuntimeDirectoryMode=755

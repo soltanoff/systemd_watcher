@@ -76,30 +76,30 @@ class ServiceMonitor(object):
         unit_file_state = unit_property.get('UnitFilePreset')
         service_name = str(unit_property['Id'])
         description = str(unit_property['Description'])
-        status = "{activeState} ({subState})".format(
-            activeState=unit_property['ActiveState'],
-            subState=unit_property['SubState'],
-        )
+        active_state = str(unit_property['ActiveState'])
+        sub_state = str(unit_property['SubState'])
+        load_state = str(unit_property['LoadState'])
+        status = "{active_state} ({sub_state})".format(active_state=active_state, sub_state=sub_state)
         service_info = "● {id} - {description}\n" \
-                       "Loaded: {loadState} ({fragmentPath}; {unitFileState}; vendor preset; {unitFilePreset})\n" \
+                       "Loaded: {load_state} ({fragment_path}; {unit_file_state}; vendor preset; {unit_file_preset})\n" \
                        "Active: {status}\n" \
                        "Main PID: {pid}\n" \
-                       "Tasks: {tasksCurrent}\n" \
-                       "Memory: {memoryCurrent}M\n" \
-                       "CPU: {CPUUsageNSec}s\n" \
-                       "CGroup: {controlGroup}\n".format(
+                       "Tasks: {tasks_current}\n" \
+                       "Memory: {memory_current}M\n" \
+                       "CPU: {CPU_usage_nsec}s\n" \
+                       "CGroup: {control_group}\n".format(
             id=service_name,
             description=description,
-            loadState=unit_property['LoadState'],
-            fragmentPath=unit_property['FragmentPath'],
-            unitFileState=unit_property['UnitFileState'],
-            unitFilePreset=unit_property['UnitFilePreset'],
+            load_state=load_state,
+            fragment_path=unit_property['FragmentPath'],
+            unit_file_state=unit_property['UnitFileState'],
+            unit_file_preset=unit_property['UnitFilePreset'],
             status=status,
             pid=service_property['MainPID'],
-            tasksCurrent=service_property['TasksCurrent'],
-            memoryCurrent=service_property['MemoryCurrent'] / 1024.0 / 1024.0,
-            CPUUsageNSec=service_property['CPUUsageNSec'] / 1000000.0,
-            controlGroup=service_property['ControlGroup'],
+            tasks_current=service_property['TasksCurrent'],
+            memory_current=service_property['MemoryCurrent'] / 1024.0 / 1024.0,
+            CPU_usage_nsec=service_property['CPUUsageNSec'] / 1000000.0,
+            control_group=service_property['ControlGroup'],
         )
 
         exec_start = service_property['ExecStart']
@@ -129,8 +129,11 @@ class ServiceMonitor(object):
         return {
             'name': description if description else service_name,
             'service_name': service_name,
-            'status': status,
             'unit_file_state': str(unit_file_state) if unit_file_state else None,
+            'active_state': active_state,
+            'sub_state': sub_state,
+            'load_state': load_state,
+            'status': status,
             'description': service_info,
         }
 

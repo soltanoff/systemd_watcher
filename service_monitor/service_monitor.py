@@ -16,6 +16,8 @@ def catch_dbus_exception(func):
 
 class ServiceMonitor(object):
 
+    """The D-Bus API of systemd/PID 1: https://www.freedesktop.org/wiki/Software/systemd/dbus/"""
+
     BUS_NAME = "org.freedesktop.systemd1"
     OBJECT_PATH = "/org/freedesktop/systemd1"
 

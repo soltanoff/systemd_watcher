@@ -76,13 +76,13 @@ class ServiceMonitor(object):
         unit_file_state = unit_property.get('UnitFilePreset')
         service_name = str(unit_property['Id'])
         description = str(unit_property['Description'])
-        status = "Active: {activeState} ({subState})".format(
+        status = "{activeState} ({subState})".format(
             activeState=unit_property['ActiveState'],
             subState=unit_property['SubState'],
         )
         service_info = "● {id} - {description}\n" \
                        "Loaded: {loadState} ({fragmentPath}; {unitFileState}; vendor preset; {unitFilePreset})\n" \
-                       "{status}\n" \
+                       "Active: {status}\n" \
                        "Main PID: {pid}\n" \
                        "Tasks: {tasksCurrent}\n" \
                        "Memory: {memoryCurrent}M\n" \

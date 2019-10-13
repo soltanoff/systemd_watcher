@@ -7,7 +7,7 @@ new Vue({
         pickedServices: 'enabled',
         message: null,
         serviceStatus: '',
-        failedServicesData: '',
+        failedServices: [],
         services: [],
     },
     mounted: function() {
@@ -71,7 +71,7 @@ new Vue({
         showFailedServices: function() {
             this.$http.get('/api/v1/services/failed/')
             .then((response) => {
-                this.failedServicesData = response.data;
+                this.failedServices = response.data;
                 $("#showFailedServices").modal('show');
             })
             .catch((err) => {

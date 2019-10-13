@@ -12,10 +12,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 from .local_settings import *
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -60,7 +56,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'systemd_watcher.wsgi.application'
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -94,7 +89,7 @@ TIME_ZONE = 'Europe/Moscow'
 
 DATETIME_FORMAT = '%d-%m-%Y %H:%M:S'
 
-USE_I18N = False
+USE_I18N = True
 
 USE_L10N = True
 

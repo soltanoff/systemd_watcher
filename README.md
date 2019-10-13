@@ -11,6 +11,7 @@ include a logging daemon, utilities to control basic system configuration like t
 list of logged-in users and running containers and virtual machines, system accounts, runtime directories and settings, 
 and daemons to manage simple network configuration, network time synchronization, log forwarding, and name resolution.
 
+
 Create `systemd_watcher\local_settings.py` with following content (see `systemd_watcher\local_settings.example.py`):
 ```python
 # from .settings import INSTALLED_APPS, MIDDLEWARE
@@ -38,7 +39,6 @@ DATABASES = {
 # if you want to use debug_toolbar (dev server only)
 INSTALLED_APPS.append('debug_toolbar')
 MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
-
 ```
 
 Fill your database and run Django development server:

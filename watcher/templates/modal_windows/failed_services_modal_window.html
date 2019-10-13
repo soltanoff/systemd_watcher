@@ -1,67 +1,195 @@
-    <div class="modal fade"
-         id="{{ id }}"
-         tabindex="-1"
-         role="dialog"
-         aria-labelledby="exampleModalCenter"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg"
-             style="width:1250px;margin: auto;"
-             role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">{{ title }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <table id="result_list" style="margin:auto; width:100%; height:100%;" v-if="failedServices">
-                        <thead>
-                        <tr>
-                            <th scope="col" class="sortable column-unit">
-                                <div class="text">UNIT</div>
-                                <div class="clear"></div>
-                            </th>
-                            <th scope="col" class="sortable column-load">
-                                <div class="text">LOAD</div>
-                                <div class="clear"></div>
-                            </th>
-                            <th scope="col" class="sortable column-active">
-                                <div class="text">ACTIVE</div>
-                                <div class="clear"></div>
-                            </th>
-                            <th scope="col" class="sortable column-sub">
-                                <div class="text">SUB</div>
-                                <div class="clear"></div>
-                            </th>
-                            <th scope="col" class="sortable column-description">
-                                <div class="text">DESCRIPTION</div>
-                                <div class="clear"></div>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="service in failedServices">
-                            <th class="field-unit">● ${ service.service_name }</th>
-                            <td class="field-load"><font color="#060">${ service.load_state }</font></td>
-                            <td class="field-active"><font color="#f00">${ service.active_state }</font></td>
-                            <td class="field-sub"><font color="#f00">${ service.sub_state }</font></td>
-                            <td class="field-description">${ service.name }</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <pre>
-                        <span v-if="failedServices">
+<div class="modal fade"
+     id="{{ id }}"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="exampleModalCenter"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg"
+         style="width:1250px;margin: auto;"
+         role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ title }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="result_list" style="margin:auto; width:100%; height:100%;" v-if="failedServices">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="sortable column-unit">
+                            <div class="text">UNIT</div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-load">
+                            <div class="text">LOAD</div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-active">
+                            <div class="text">ACTIVE</div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-sub">
+                            <div class="text">SUB</div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-description">
+                            <div class="text">DESCRIPTION</div>
+                            <div class="clear"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="service in failedServices">
+                        <th class="field-unit">● ${ service.service_name }</th>
+                        <td class="field-load"><font color="#060">${ service.load_state }</font></td>
+                        <td class="field-active"><font color="#f00">${ service.active_state }</font></td>
+                        <td class="field-sub"><font color="#f00">${ service.sub_state }</font></td>
+                        <td class="field-description">${ service.name }</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <pre>
+                    <span v-if="failedServices">
 LOAD   = Reflects whether the unit definition was properly loaded.
 ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
 SUB    = The low-level unit activation state, values depend on unit type.
-                        </span>
+                    </span>
 <span>${ failedServices.length } loaded units listed. Pass 'Inactive services' to see loaded but inactive units, too.
+To show all installed unit files use 'All services (en​
+2
+<div class="modal fade"
+3
+     id="{{ id }}"
+4
+     tabindex="-1"
+5
+     role="dialog"
+6
+     aria-labelledby="exampleModalCenter"
+7
+     aria-hidden="true">
+8
+    <div class="modal-dialog modal-dialog-centered modal-lg"
+9
+         style="width:1250px;margin: auto;"
+10
+         role="document">
+11
+        <div class="modal-content">
+12
+            <div class="modal-header">
+13
+                <h5 class="modal-title">{{ title }}</h5>
+14
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+15
+                    <span aria-hidden="true">&times;</span>
+16
+                </button>
+17
+            </div>
+18
+            <div class="modal-body">
+19
+                <table id="result_list" style="margin:auto; width:100%; height:100%;" v-if="failedServices">
+20
+                    <thead>
+21
+                    <tr>
+22
+                        <th scope="col" class="sortable column-unit">
+23
+                            <div class="text">UNIT</div>
+24
+                            <div class="clear"></div>
+25
+                        </th>
+26
+                        <th scope="col" class="sortable column-load">
+27
+                            <div class="text">LOAD</div>
+28
+                            <div class="clear"></div>
+29
+                        </th>
+30
+                        <th scope="col" class="sortable column-active">
+31
+                            <div class="text">ACTIVE</div>
+32
+                            <div class="clear"></div>
+33
+                        </th>
+34
+                        <th scope="col" class="sortable column-sub">
+35
+                            <div class="text">SUB</div>
+36
+                            <div class="clear"></div>
+37
+                        </th>
+38
+                        <th scope="col" class="sortable column-description">
+39
+                            <div class="text">DESCRIPTION</div>
+40
+                            <div class="clear"></div>
+41
+                        </th>
+42
+                    </tr>
+43
+                    </thead>
+44
+                    <tbody>
+45
+                    <tr v-for="service in failedServices">
+46
+                        <th class="field-unit">● ${ service.service_name }</th>
+47
+                        <td class="field-load"><font color="#060">${ service.load_state }</font></td>
+48
+                        <td class="field-active"><font color="#f00">${ service.active_state }</font></td>
+49
+                        <td class="field-sub"><font color="#f00">${ service.sub_state }</font></td>
+50
+                        <td class="field-description">${ service.name }</td>
+51
+                    </tr>
+52
+                    </tbody>
+53
+                </table>
+54
+                <pre>
+55
+                    <span v-if="failedServices">
+56
+LOAD   = Reflects whether the unit definition was properly loaded.
+57
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+58
+SUB    = The low-level unit activation state, values depend on unit type.
+59
+                    </span>
+60
+<span>${ failedServices.length } loaded units listed. Pass 'Inactive services' to see loaded but inactive units, too.
+61
 To show all installed unit files use 'All services (enabled)'.</span></pre>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary m-progress" data-dismiss="modal">Close</button>
-                </div>
+62
+            </div>
+63
+            <div class="modal-footer">
+64
+                <button type="button" class="btn btn-secondary m-progress" data-dismiss="modal">Close</button>
+65
+            </div>abled)'.</span></pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary m-progress" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>

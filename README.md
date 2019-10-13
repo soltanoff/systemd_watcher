@@ -53,6 +53,15 @@ To run with a docker compose:
 $ docker-compose up
 ```
 
+To run as `systemctl` unit:
+* Move snbot.service file to `systemctl` service files directory (`/etc/systemd/system/`)
+* Run this commands:
+```
+# systemctl enable systemd_watcher.service
+# systemctl daemon-reload
+# systemctl start systemd_watcher.service
+```
+
 ## Screens
 ##### Example #1: Main page
 ![Main page](assets/demo_1.png)

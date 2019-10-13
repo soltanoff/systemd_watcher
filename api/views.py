@@ -23,46 +23,46 @@ class EnabledServices(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
-        return Response(ServiceMonitor.get_enabled_services())
+        return Response(ServiceMonitor().get_enabled_services())
 
 
 class ActiveServices(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
-        return Response(ServiceMonitor.get_active_services())
+        return Response(ServiceMonitor().get_active_services())
 
 
 class InactiveServices(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
-        return Response(ServiceMonitor.get_inactive_services())
+        return Response(ServiceMonitor().get_inactive_services())
 
 
 class FailedServices(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
-        return Response(ServiceMonitor.get_failed_services())
+        return Response(ServiceMonitor().get_failed_services())
 
 
 class ServiceStatus(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, service_name, format=None):
-        return Response(ServiceMonitor.get_service_status(service_name))
+        return Response(ServiceMonitor().get_service_status(service_name))
 
 
 class StartService(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
     def post(self, request, service_name, format=None):
-        return Response(ServiceMonitor.restart_service(service_name))
+        return Response(ServiceMonitor().restart_service(service_name))
 
 
 class StopService(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
     def post(self, request, service_name, format=None):
-        return Response(ServiceMonitor.stop_service(service_name))
+        return Response(ServiceMonitor().stop_service(service_name))

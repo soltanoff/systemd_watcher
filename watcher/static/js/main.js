@@ -8,6 +8,7 @@ new Vue({
         message: null,
         serviceStatus: '',
         failedServices: [],
+        favoriteServices: [],
         services: [],
         search: '',
     },
@@ -34,7 +35,8 @@ new Vue({
             this.$http.get('/api/v1/services/')
             .then((response) => {
                 this.loading = false;
-                this.services = response.data;
+                this.services = response.data.services;
+                this.favoriteServices = response.data.favorite_services;
             })
             .catch((err) => {
                 this.loading = false;
@@ -46,7 +48,8 @@ new Vue({
             this.$http.get('/api/v1/services/active/')
             .then((response) => {
                 this.loading = false;
-                this.services = response.data;
+                this.services = response.data.services;
+                this.favoriteServices = response.data.favorite_services;
             })
             .catch((err) => {
                 this.loading = false;
@@ -58,7 +61,8 @@ new Vue({
             this.$http.get('/api/v1/services/inactive/')
             .then((response) => {
                 this.loading = false;
-                this.services = response.data;
+                this.services = response.data.services;
+                this.favoriteServices = response.data.favorite_services;
             })
             .catch((err) => {
                 this.loading = false;
@@ -82,7 +86,7 @@ new Vue({
             this.$http.post('/api/v1/service/manage_favorite/' + service + '/')
             .then((response) => {
                 this.loading = false;
-                this.getServicesByPickedRadioButton(pickedServices);
+                this.favoriteServices = response.data;
             })
             .catch((err) => {
                 this.loading = false;

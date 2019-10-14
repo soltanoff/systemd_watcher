@@ -16,12 +16,13 @@
                 </div>
             </form>
             <div>
+                <input type="radio" id="four" value="favorite" v-model="pickedServices">
+                <label for="four" style="margin-right: 16px;"><i><b>Favorite services </b></i></label>
                 <input type="radio" id="one" value="enabled" v-model="pickedServices">
                 <label for="one">All services (enabled)</label>
                 <br>
                 <input type="radio" id="two" value="active" v-model="pickedServices">
-                <label for="two">Active services</label>
-                <br>
+                <label for="two" style="margin-right: 32px;">Active services</label>
                 <input type="radio" id="three" value="inactive" v-model="pickedServices">
                 <label for="three">Inactive services</label>
             </div>

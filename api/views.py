@@ -10,6 +10,8 @@ from watcher.models import FavoriteServiceModel
 
 # TODO: soltanoff: use authentication.TokenAuthentication
 
+favorite_services = FavoriteServiceModel.objects.values_list('name', flat=True).filter
+
 
 class ApiRoot(APIView):
     permission_classes = (permissions.IsAuthenticated,)
@@ -48,21 +50,30 @@ class EnabledServices(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
-        return Response(ServiceMonitor().get_enabled_services())
+        return Response({
+            'services': ServiceMonitor().get_enabled_services(),
+            'favorite_services': favorite_services(user=request.user)
+        })
 
 
 class ActiveServices(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
-        return Response(ServiceMonitor().get_active_services())
+        return Response({
+            'services': ServiceMonitor().get_active_services(),
+            'favorite_services': favorite_services(user=request.user)
+        })
 
 
 class InactiveServices(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
-        return Response(ServiceMonitor().get_inactive_services())
+        return Response({
+            'services': ServiceMonitor().get_inactive_services(),
+            'favorite_services': favorite_services(user=request.user)
+        })
 
 
 class FailedServices(APIView):
@@ -78,8 +89,8 @@ class FavoriteServices(APIView):
     def get(self, request, format=None):
         result = []
         monitor = ServiceMonitor()
-        for record in FavoriteServiceModel.objects.filter(user=request.user):
-            service_status = monitor.get_service_status(record.name)
+        for service_name in favorite_services(user=request.user):
+            service_status = monitor.get_service_status(service_name)
             if service_status:
                 result.append(service_status)
 
@@ -90,11 +101,11 @@ class ManageFavoriteServices(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, service_name, format=None):
-        record = FavoriteServiceModel.objects.get(user=request.user, name=service_name)
+        record = FavoriteServiceModel.objects.filter(user=request.user, name=service_name).first()
         if record:
             record.delete()
         else:
             record = FavoriteServiceModel(user=request.user, name=service_name)
             record.save()
 
-        return Response(status=status.HTTP_200_OK)
+        return Response(favorite_services(user=request.user))

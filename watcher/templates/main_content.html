@@ -12,7 +12,6 @@
                            value="{{ search }}"
                            id="searchbar"
                            autofocus/>
-                    <!--<input type="submit" value="Search"/>-->
                 </div>
             </form>
             <div>
@@ -33,62 +32,62 @@
         <div class="results">
             <table id="result_list" style="margin:auto; width:100%; height:100%;">
                 <thead>
-                <tr>
-                    <th scope="col" class="sortable column-name">
-                        <div class="text">Name</div>
-                        <div class="clear"></div>
-                    </th>
-                    <th scope="col" class="sortable column-description">
-                        <div class="text">Description</div>
-                        <div class="clear"></div>
-                    </th>
-                    <th scope="col" class="sortable column-status">
-                        <div class="text">Status</div>
-                        <div class="clear"></div>
-                    </th>
-                    {% if user.is_staff %}
-                    <th scope="col" class="sortable column-actions">
-                        <div class="text">Actions</div>
-                        <div class="clear"></div>
-                    </th>
-                    {% endif %}
-                </tr>
+                    <tr>
+                        <th scope="col" class="sortable column-name">
+                            <div class="text">Name</div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-description">
+                            <div class="text">Description</div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-status">
+                            <div class="text">Status</div>
+                            <div class="clear"></div>
+                        </th>
+                        {% if user.is_staff %}
+                        <th scope="col" class="sortable column-actions">
+                            <div class="text">Actions</div>
+                            <div class="clear"></div>
+                        </th>
+                        {% endif %}
+                    </tr>
                 </thead>
                 <tbody>
-                <tr v-for="service in filteredServices">
-                    <th class="field-name">
-                        <a href="#">
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                        </a>
-                        ${ service.name }
-                    </th>
-                    <!-- TODO: soltaanoff: sroll for <code> -->
-                    <td class="field-description">
-                        <code>
-                            <template v-for="line in service.description.split('\n')">${ line }<br></template>
-                        </code>
-                    </td>
-                    <td class="field-status">
-                        <p id="warn" v-if="!(service.status.startsWith('active'))">${ service.status }</p>
-                        <p v-if="(service.status.startsWith('active'))">${ service.status }</p>
-                    </td>
-                    {% if user.is_staff %}
-                    <td class="field-actions">
-                        <input type="submit"
-                               value="START"
-                               v-if="!(service.status.startsWith('active'))"
-                               v-on:click="startService(service.service_name)"/>
-                        <input type="submit"
-                               value="RESTART"
-                               v-if="service.status.startsWith('active')"
-                               v-on:click="restartService(service.service_name)"/>
-                        <input type="button"
-                               value="STOP"
-                               v-if="!(service.status.startsWith('inactive'))"
-                               v-on:click="stopService(service.service_name)"/>
-                    </td>
-                    {% endif %}
-                </tr>
+                    <tr v-for="service in filteredServices">
+                        <th class="field-name">
+                            <a href="#">
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                            </a>
+                            ${ service.name }
+                        </th>
+                        <!-- TODO: soltaanoff: sroll for <code> -->
+                        <td class="field-description">
+                            <code>
+                                <template v-for="line in service.description.split('\n')">${ line }<br></template>
+                            </code>
+                        </td>
+                        <td class="field-status">
+                            <p id="warn" v-if="!(service.status.startsWith('active'))">${ service.status }</p>
+                            <p v-if="(service.status.startsWith('active'))">${ service.status }</p>
+                        </td>
+                        {% if user.is_staff %}
+                        <td class="field-actions">
+                            <input type="submit"
+                                   value="START"
+                                   v-if="!(service.status.startsWith('active'))"
+                                   v-on:click="startService(service.service_name)"/>
+                            <input type="submit"
+                                   value="RESTART"
+                                   v-if="service.status.startsWith('active')"
+                                   v-on:click="restartService(service.service_name)"/>
+                            <input type="button"
+                                   value="STOP"
+                                   v-if="!(service.status.startsWith('inactive'))"
+                                   v-on:click="stopService(service.service_name)"/>
+                        </td>
+                        {% endif %}
+                    </tr>
                 </tbody>
             </table>
         </div>

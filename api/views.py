@@ -1,6 +1,5 @@
-from http import HTTPStatus
-
 from rest_framework import permissions
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
@@ -98,4 +97,4 @@ class ManageFavoriteServices(APIView):
             record = FavoriteServiceModel(user=request.user, name=service_name)
             record.save()
 
-        return Response(status=HTTPStatus.OK)
+        return Response(status=status.HTTP_200_OK)

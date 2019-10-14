@@ -65,6 +65,30 @@ new Vue({
                 console.log(err);
             })
         },
+        getFavoriteServices: function() {
+            this.loading = true;
+            this.$http.get('/api/v1/services/favorite/')
+            .then((response) => {
+                this.loading = false;
+                this.services = response.data;
+            })
+            .catch((err) => {
+                this.loading = false;
+                console.log(err);
+            })
+        },
+        manageFavoriteServices: function(service) {
+            this.loading = true;
+            this.$http.post('/api/v1/service/manage_favorite/' + service + '/')
+            .then((response) => {
+                this.loading = false;
+                this.getServicesByPickedRadioButton(pickedServices);
+            })
+            .catch((err) => {
+                this.loading = false;
+                console.log(err);
+            })
+        },
         getServicesByPickedRadioButton: function(value) {
             switch(value) {
                 case 'active':
@@ -72,6 +96,9 @@ new Vue({
                     break;
                 case 'inactive':
                     this.getInactiveServices();
+                    break;
+                case 'favorite':
+                    this.getFavoriteServices();
                     break;
                 default:
                     this.getServices();

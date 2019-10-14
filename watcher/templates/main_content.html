@@ -24,7 +24,7 @@
                 <label for="one">All services (enabled)</label>
                 <br>
                 <input type="radio" id="two" value="active" v-model="pickedServices">
-                <label for="two" style="margin-right: 42px;">Active services</label>
+                <label for="two" style="margin-right: 46px;">Active services</label>
                 <input type="radio" id="three" value="inactive" v-model="pickedServices">
                 <label for="three">Inactive services</label>
             </div>
@@ -56,9 +56,14 @@
                 <tbody>
                     <tr v-for="service in filteredServices">
                         <th class="field-name">
-                            <a href="#">
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                            </a>
+                            <button type="button"
+                                    class="btn btn-default btn-md"
+                                    style="outline: none;border: 0;padding: 0;"
+                                    v-on:click="manageFavoriteServices(service.service_name);">
+                                <span class="glyphicon" aria-hidden="true"
+                                      v-bind:class="{'glyphicon-star': favoriteServices.includes(service.service_name), 'glyphicon-star-empty': !favoriteServices.includes(service.service_name)}"
+                                ></span>
+                            </button>
                             ${ service.name }
                         </th>
                         <!-- TODO: soltaanoff: sroll for <code> -->

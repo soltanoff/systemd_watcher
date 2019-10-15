@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^manage/', admin.site.urls),
     url(r'^schema/', get_schema_view(title='Test API')),
     url(r'^api/v1/', include('api.urls')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', views.obtain_auth_token)
 ]
 

@@ -1,5 +1,5 @@
 from rest_framework import permissions
-from rest_framework import status
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
@@ -7,13 +7,13 @@ from rest_framework.views import APIView
 from service_monitor import ServiceMonitor
 from watcher.models import FavoriteServiceModel
 
-
 # TODO: soltanoff: use authentication.TokenAuthentication
 
 favorite_services = FavoriteServiceModel.objects.values_list('name', flat=True).filter
 
 
 class ApiRoot(APIView):
+    authentication_classes = (SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
@@ -26,6 +26,7 @@ class ApiRoot(APIView):
 
 
 class StartService(APIView):
+    authentication_classes = (SessionAuthentication,)
     permission_classes = (permissions.IsAdminUser,)
 
     def post(self, request, service_name, format=None):
@@ -33,6 +34,7 @@ class StartService(APIView):
 
 
 class StopService(APIView):
+    authentication_classes = (SessionAuthentication,)
     permission_classes = (permissions.IsAdminUser,)
 
     def post(self, request, service_name, format=None):
@@ -40,6 +42,7 @@ class StopService(APIView):
 
 
 class ServiceStatus(APIView):
+    authentication_classes = (SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, service_name, format=None):
@@ -47,6 +50,7 @@ class ServiceStatus(APIView):
 
 
 class EnabledServices(APIView):
+    authentication_classes = (SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
@@ -57,6 +61,7 @@ class EnabledServices(APIView):
 
 
 class ActiveServices(APIView):
+    authentication_classes = (SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
@@ -67,6 +72,7 @@ class ActiveServices(APIView):
 
 
 class InactiveServices(APIView):
+    authentication_classes = (SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
@@ -77,6 +83,7 @@ class InactiveServices(APIView):
 
 
 class FailedServices(APIView):
+    authentication_classes = (SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
@@ -84,6 +91,7 @@ class FailedServices(APIView):
 
 
 class FavoriteServices(APIView):
+    authentication_classes = (SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
@@ -98,6 +106,7 @@ class FavoriteServices(APIView):
 
 
 class ManageFavoriteServices(APIView):
+    authentication_classes = (SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, service_name, format=None):

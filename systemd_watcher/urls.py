@@ -17,6 +17,7 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
+from rest_framework.authtoken import views
 from rest_framework.schemas import get_schema_view
 
 urlpatterns = [
@@ -25,7 +26,7 @@ urlpatterns = [
     url(r'^manage/', admin.site.urls),
     url(r'^schema/', get_schema_view(title='Test API')),
     url(r'^api/v1/', include('api.urls')),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-token-auth/', views.obtain_auth_token)
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

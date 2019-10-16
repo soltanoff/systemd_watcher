@@ -62,6 +62,10 @@ To run as `systemctl` unit:
 # systemctl start systemd_watcher.service
 ```
 
+## The note
+Due to the `simplicity` of authorization and authentication, use this service only at `stages` and `preprod`. If you still 
+use it on `production`, then you need to deny access to the service **outside**, only for local use on `production`.
+
 ## Screens
 ##### Example #1: Main page
 ![Main page](assets/demo_1.png)

@@ -109,11 +109,10 @@ class ManageFavoriteServices(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, service_name, format=None):
-        record = FavoriteServiceModel.objects.filter(user=request.user, name=service_name).first()
-        if record:
-            record.delete()
-        else:
-            record = FavoriteServiceModel(user=request.user, name=service_name)
+        record, created = FavoriteServiceModel.objects.get_or_create(user=request.user, name=service_name)
+        if created:
             record.save()
+        else:
+            record.delete()
 
         return Response(favorite_services(user=request.user))

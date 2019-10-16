@@ -7,7 +7,6 @@ from rest_framework.views import APIView
 from service_monitor import ServiceMonitor
 from watcher.models import FavoriteServiceModel
 
-# TODO: soltanoff: use authentication.TokenAuthentication
 
 favorite_services = FavoriteServiceModel.objects.values_list('name', flat=True).filter
 

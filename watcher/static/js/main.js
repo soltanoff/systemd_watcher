@@ -10,6 +10,7 @@ new Vue({
         failedServices: [],
         favoriteServices: [],
         services: [],
+        currentServiceLogs: '',
         search: '',
     },
     mounted: function() {
@@ -18,7 +19,7 @@ new Vue({
     watch: {
         pickedServices: function(value) {
             this.getServicesByPickedRadioButton(value);
-        }
+        },
     },
     computed: {
         filteredServices: function() {
@@ -108,6 +109,10 @@ new Vue({
                     this.getServices();
                     break;
             }
+        },
+        showServiceLogs: function(logs) {
+            this.currentServiceLogs = logs;
+            $("#showServiceLogs").modal('show');
         },
         showFailedServices: function() {
             this.$http.get('/api/v1/services/failed/')

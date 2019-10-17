@@ -34,6 +34,10 @@
                                 <div class="text">SUB</div>
                                 <div class="clear"></div>
                             </th>
+                            <th scope="col" class="sortable column-logs">
+                                <div class="text">LOGS</div>
+                                <div class="clear"></div>
+                            </th>
                             <th scope="col" class="sortable column-description">
                                 <div class="text">DESCRIPTION</div>
                                 <div class="clear"></div>
@@ -46,11 +50,19 @@
                             <td class="field-load"><font color="#060">${ service.load_state }</font></td>
                             <td class="field-active"><font color="#f00">${ service.active_state }</font></td>
                             <td class="field-sub"><font color="#f00">${ service.sub_state }</font></td>
+                            <td class="field-logs">
+                                <font color="#f00">
+                                    <button type="button"
+                                        class="btn btn-outline-info btn-sm"
+                                        v-on:click="showServiceLogs(service.logs)">LOGS</button>
+                                </font>
+                            </td>
                             <td class="field-description">${ service.name }</td>
                         </tr>
                     </tbody>
                 </table>
-                <pre><span v-if="failedServices">LOAD   = Reflects whether the unit definition was properly loaded.
+                <pre><span v-if="failedServices">
+LOAD   = Reflects whether the unit definition was properly loaded.
 ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
 SUB    = The low-level unit activation state, values depend on unit type.
                     </span>

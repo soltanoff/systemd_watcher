@@ -1,4 +1,5 @@
 import operator
+import subprocess
 
 import dbus
 
@@ -57,6 +58,14 @@ class ServiceMonitor(object):
                     and not service_name.startswith('systemd') \
                     and service_active_stage != 'exited':
                 yield self.get_service_status(service_name)
+
+    @staticmethod
+    def _get_journalctl_logs(service_name):
+        return subprocess.Popen(
+            args='journalctl -u %s' % service_name,
+            shell=True,
+            stdout=subprocess.PIPE
+        ).communicate()[0].decode('utf-8')
 
     @catch_dbus_exception
     def start_service(self, service_name, mode="replace"):
@@ -137,6 +146,7 @@ class ServiceMonitor(object):
             'load_state': load_state,
             'status': status,
             'description': service_info,
+            'logs': self._get_journalctl_logs(service_name)
         }
 
     @catch_dbus_exception

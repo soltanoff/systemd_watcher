@@ -14,6 +14,7 @@ urlpatterns = format_suffix_patterns([
     path('services/favorite/', views.FavoriteServices.as_view(), name='favorite_services'),
     path('service/manage_favorite/<service_name>/', views.ManageFavoriteServices.as_view(), name='manage_favorite'),
     path('service/status/<service_name>/', views.ServiceStatus.as_view(), name='service_status'),
+    path('service/logs/<service_name>/', views.ServiceLogs.as_view(), name='service_logs'),
     path('service/start/<service_name>/', views.StartService.as_view(), name='start_services'),
     path('service/restart/<service_name>/', views.StartService.as_view(), name='restart_services'),
     path('service/stop/<service_name>/', views.StopService.as_view(), name='stop_services'),

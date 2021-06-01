@@ -60,7 +60,7 @@ class ServiceMonitor(object):
                 yield self.get_service_status(service_name)
 
     @staticmethod
-    def _get_journalctl_logs(service_name):
+    def get_journalctl_logs(service_name):
         return subprocess.Popen(
             args='journalctl -u %s' % service_name,
             shell=True,
@@ -92,7 +92,7 @@ class ServiceMonitor(object):
         load_state = str(unit_property['LoadState'])
         status = "{active_state} ({sub_state})".format(active_state=active_state, sub_state=sub_state)
         service_info = "● {id} - {description}\n" \
-                       "Loaded: {load_state} ({fragment_path}; {unit_file_state}; vendor preset; {unit_file_preset})\n" \
+                       "Loaded: {load_state} ({unit_file_state}; vendor preset; {unit_file_preset})\n" \
                        "Active: {status}\n" \
                        "Main PID: {pid}\n" \
                        "Tasks: {tasks_current}\n" \
@@ -102,7 +102,6 @@ class ServiceMonitor(object):
             id=service_name,
             description=description,
             load_state=load_state,
-            fragment_path=unit_property['FragmentPath'],
             unit_file_state=unit_property['UnitFileState'],
             unit_file_preset=unit_property['UnitFilePreset'],
             status=status,
@@ -113,27 +112,27 @@ class ServiceMonitor(object):
             control_group=service_property['ControlGroup'],
         )
 
-        exec_start = service_property['ExecStart']
+        exec_start = service_property.get('ExecStart')
         if exec_start:
             service_info += "Exec start: {0}\n".format(' '.join(exec_start[0][1]))
 
-        exec_start_post = service_property['ExecStartPost']
+        exec_start_post = service_property.get('ExecStartPost')
         if exec_start_post:
             service_info += "Exec start post: {0}\n".format(' '.join(exec_start_post[0][1]))
 
-        exec_start_pre = service_property['ExecStartPre']
+        exec_start_pre = service_property.get('ExecStartPre')
         if exec_start_pre:
             service_info += "Exec start pre: {0}\n".format(' '.join(exec_start_pre[0][1]))
 
-        exec_stop = service_property['ExecStop']
+        exec_stop = service_property.get('ExecStop')
         if exec_stop:
             service_info += "Exec stop: {0}\n".format(' '.join(exec_stop[0][1]))
 
-        failure_action = service_property['FailureAction']
+        failure_action = service_property.get('FailureAction')
         if failure_action:
             service_info += "Failure action: {0}\n".format(failure_action)
 
-        exec_main_status = service_property['ExecMainStatus']
+        exec_main_status = service_property.get('ExecMainStatus')
         if exec_main_status:
             service_info += "Exec main status: {0}\n".format(exec_main_status)
 
@@ -146,7 +145,6 @@ class ServiceMonitor(object):
             'load_state': load_state,
             'status': status,
             'description': service_info,
-            'logs': self._get_journalctl_logs(service_name)
         }
 
     @catch_dbus_exception

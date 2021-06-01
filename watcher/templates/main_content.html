@@ -75,7 +75,8 @@
                         <td class="field-actions">
                             <button type="button"
                                     class="btn btn-outline-dark btn-sm btn-log"
-                                    v-on:click="showServiceLogs(service.logs)">LOGS</button>
+                                    v-on:click="showServiceLogs(service.service_name)">LOGS
+                            </button>
                             {% if user.is_staff %}
                             <input type="submit"
                                    value="START"

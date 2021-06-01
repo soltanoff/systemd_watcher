@@ -110,10 +110,6 @@ new Vue({
                     break;
             }
         },
-        showServiceLogs: function(logs) {
-            this.currentServiceLogs = logs;
-            $("#showServiceLogs").modal('show');
-        },
         showFailedServices: function() {
             this.$http.get('/api/v1/services/failed/')
             .then((response) => {
@@ -122,6 +118,17 @@ new Vue({
             })
             .catch((err) => {
                 console.log(err);
+            })
+        },
+        showServiceLogs: function(service) {
+            this.$http.get('/api/v1/service/logs/' + service + '/')
+            .then((response) => {
+                this.currentServiceLogs = response.data;
+                $("#showServiceLogs").modal('show');
+            })
+            .catch((err) => {
+                console.log(err);
+                this.currentServiceLogs = '';
             })
         },
         startService: function(service) {

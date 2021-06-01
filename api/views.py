@@ -7,7 +7,6 @@ from rest_framework.views import APIView
 from service_monitor import ServiceMonitor
 from watcher.models import FavoriteServiceModel
 
-
 favorite_services = FavoriteServiceModel.objects.values_list('name', flat=True).filter
 
 
@@ -46,6 +45,14 @@ class ServiceStatus(APIView):
 
     def get(self, request, service_name, format=None):
         return Response(ServiceMonitor().get_service_status(service_name))
+
+
+class ServiceLogs(APIView):
+    authentication_classes = (SessionAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, service_name, format=None):
+        return Response(ServiceMonitor().get_journalctl_logs(service_name))
 
 
 class EnabledServices(APIView):

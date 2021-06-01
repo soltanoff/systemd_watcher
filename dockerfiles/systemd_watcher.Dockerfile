@@ -1,9 +1,12 @@
-FROM python:3.5
-MAINTAINER Ilya Soltanov <piccadillable@gamil.com>
+FROM python:3.6.9
+MAINTAINER Ilya Soltanov <piccadillable@gmail.com>
 ENV PYTHONBUFFERED 1
 COPY ./requirements.txt /systemd_watcher/requirements.txt
-COPY ./wait-for-it.sh /systemd_watcher/wait-for-it.sh
 WORKDIR /systemd_watcher
-RUN chmod +x wait-for-it.sh
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update
+RUN apt-get -qq -y install apt-utils
+RUN apt-get -qq -y install curl
+RUN apt-get install  dbus libapparmor1 libdbus-1-3 libdbus-glib-1-2 libdbus-glib-1-dev-bin libdbus-glib-1-dev libdbus-1-dev
 RUN pip install -r requirements.txt
 COPY . /systemd_watcher

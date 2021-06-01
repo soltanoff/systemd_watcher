@@ -15,14 +15,13 @@ services:
             - migration
 
     migration:
-        image: systemd_watcher
+      image: systemd_watcher_migration
         build:
             context: .
             dockerfile: dockerfiles/systemd_watcher.Dockerfile
         volumes:
           - ./data:/systemd_watcher/data
           - ./static:/systemd_watcher/static
-#        command: bash -c "./wait-for-it.sh -t 20 db:3306 | python manage.py collectstatic --noinput && python manage.py migrate"
         command: bash -c "python manage.py collectstatic --noinput && python manage.py migrate"
 
     nginx:
@@ -34,16 +33,3 @@ services:
           - ./static:/static
         depends_on:
           - systemd_watcher
-
-#    mysql:
-#        image: mysql:5.7
-#        restart: always
-#        environment:
-#            MYSQL_DATABASE: 'pyftp_db'
-#            MYSQL_USER: 'dbuser'
-#            MYSQL_PASSWORD: 'dbpassword'
-#            MYSQL_HOST: '%'
-#            MYSQL_ROOT_PASSWORD: 'dbpassword'
-#            MYSQL_ROOT_HOST: '%'
-#        ports:
-#          - '3306:3306'

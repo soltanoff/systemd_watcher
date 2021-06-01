@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 
+from api.models import FavoriteServiceModel
 from service_monitor import ServiceMonitor
-from watcher.models import FavoriteServiceModel
 
 favorite_services = FavoriteServiceModel.objects.values_list('name', flat=True).filter
 

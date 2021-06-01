@@ -44,6 +44,10 @@ td, th {
     text-align: left;
 }
 
+.btn-log {
+    padding: 3px 13px;
+}
+
 #warn {
     -webkit-animation: warn 2s linear infinite;
     animation: warn 2s linear infinite;
@@ -65,6 +69,10 @@ td, th {
 #changelist-search label {
     line-height: unset;
     align-self: center;
+}
+
+#changelist {
+    display: unset;
 }
 
 #changelist #toolbar form #searchbar {

@@ -1,4 +1,4 @@
-{% load admin_urls static admin_list staticfiles %}
+{% load admin_urls static admin_list %}
 <div id="content-main">
     <div class="module" id="changelist">
         <div id="toolbar">
@@ -74,7 +74,7 @@
 
                         <td class="field-actions">
                             <button type="button"
-                                    class="btn btn-outline-dark btn-sm"
+                                    class="btn btn-outline-dark btn-sm btn-log"
                                     v-on:click="showServiceLogs(service.logs)">LOGS</button>
                             {% if user.is_staff %}
                             <input type="submit"

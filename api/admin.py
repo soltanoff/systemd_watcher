@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from watcher.models import FavoriteServiceModel
+from api.models import FavoriteServiceModel
 
 admin.site.register(FavoriteServiceModel)

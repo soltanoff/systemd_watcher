@@ -4,7 +4,7 @@ new Vue({
     data: {
         loading: false,
         preview: false,
-        pickedServices: 'enabled',
+        pickedServices: 'active',
         message: null,
         serviceStatus: '',
         failedServices: [],
@@ -14,7 +14,8 @@ new Vue({
         search: '',
     },
     mounted: function() {
-        this.getServices();
+        this.pickedServices = 'active'
+        this.getActiveServices();
     },
     watch: {
         pickedServices: function(value) {

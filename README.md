@@ -45,6 +45,7 @@ Fill your database and run Django development server:
 ```
 $ sudo apt-get install libdbus-glib-1-dev libdbus-1-dev
 $ pip3 install -r requirements.txt
+$ python3 manage.py makemigrations
 $ python3 manage.py migrate
 $ python3 manage.py collectstatic
 ```

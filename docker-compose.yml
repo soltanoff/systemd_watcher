@@ -23,7 +23,7 @@ services:
       dockerfile: dockerfiles/systemd_watcher.Dockerfile
     volumes:
       - ./data:/systemd_watcher/data
-      - ./database.db:/db/db.db
+      - ./static:/systemd_watcher/static
     command: bash -c "python manage.py collectstatic --noinput"
 
   migration:
@@ -33,7 +33,7 @@ services:
       dockerfile: dockerfiles/systemd_watcher.Dockerfile
     volumes:
       - ./data:/systemd_watcher/data
-      - ./static:/systemd_watcher/static
+      - ./database.db:/db/db.db
     command: bash -c "python manage.py makemigrations --noinput  && python manage.py migrate"
 
   nginx:

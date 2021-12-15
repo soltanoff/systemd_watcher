@@ -97,7 +97,7 @@ class ServiceMonitor(object):
                        "Main PID: {pid}\n" \
                        "Tasks: {tasks_current}\n" \
                        "Memory: {memory_current}M\n" \
-                       "CPU: {CPU_usage_nsec}s\n" \
+                       "CPU: {CPU_usage_nsec:.3f}s\n" \
                        "CGroup: {control_group}\n".format(
             id=service_name,
             description=description,
@@ -108,7 +108,7 @@ class ServiceMonitor(object):
             pid=service_property['MainPID'],
             tasks_current=service_property['TasksCurrent'],
             memory_current=service_property['MemoryCurrent'] / 1024.0 / 1024.0,
-            CPU_usage_nsec=service_property['CPUUsageNSec'] / 1000000.0,
+            CPU_usage_nsec=service_property['CPUUsageNSec'] / 1_000_000_000.0,
             control_group=service_property['ControlGroup'],
         )
 

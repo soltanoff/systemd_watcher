@@ -1,7 +1,6 @@
-code, pre {
-    font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
-    font-size: 12px;
-    overflow-x: auto;
+.modal-content {
+    color: var(--body-fg);
+    background: var(--body-bg);
 }
 
 button:active, button:focus {

@@ -1,7 +1,7 @@
 import operator
 import subprocess
 
-import dbus
+#import dbus
 
 
 def catch_dbus_exception(func):
@@ -53,7 +53,7 @@ class ServiceMonitor(object):
             service_status = dbus_service_info[3]
             service_active_stage = dbus_service_info[4]
             if (status is None or status == service_status) \
-                    and '.service' in service_name \
+                    and service_name.endswith('.service') \
                     and '@' not in service_name \
                     and not service_name.startswith('systemd') \
                     and service_active_stage != 'exited':

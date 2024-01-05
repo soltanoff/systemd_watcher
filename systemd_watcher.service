@@ -10,7 +10,7 @@ WantedBy=multi-user.target
 
 [Service]
 PermissionsStartOnly=true
-WorkingDirectory=/usr/local/systemd_watcher
+WorkingDirectory=/usr/local/systemd_watcher/app
 ExecStart=/usr/bin/python3 manage.py runserver 0.0.0.0:8000
 TimeoutSec=600
 Restart=on-failure

@@ -1,45 +1,22 @@
-version: "3"
+version: "3.7"
+
 services:
   systemd_watcher:
     image: systemd_watcher
     build:
       context: .
-      dockerfile: dockerfiles/systemd_watcher.Dockerfile
+      dockerfile: Dockerfile
     volumes:
       - ./data:/systemd_watcher/data
       - ./database.db:/db/db.db
-    expose:
-      - "8000"
+    ports:
+      - "8000:8000"
     restart: unless-stopped
-    command: python manage.py runserver 0.0.0.0:8000
-    depends_on:
-      - staticfiles
-      - migration
-
-  staticfiles:
-    image: systemd_watcher_staticfiles
-    build:
-      context: .
-      dockerfile: dockerfiles/systemd_watcher.Dockerfile
-    volumes:
-      - ./data:/systemd_watcher/data
-      - ./static:/systemd_watcher/static
-    command: bash -c "python manage.py collectstatic --noinput"
-
-  migration:
-    image: systemd_watcher_migration
-    build:
-      context: .
-      dockerfile: dockerfiles/systemd_watcher.Dockerfile
-    volumes:
-      - ./data:/systemd_watcher/data
-      - ./database.db:/db/db.db
-    command: bash -c "python manage.py makemigrations --noinput  && python manage.py migrate"
 
   nginx:
     image: nginx:1.13.3
     ports:
-      - "8000:8000"
+      - "80:80"
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - ./static:/static

@@ -12,6 +12,39 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 from local_settings import *
 
+# Logging
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": True,
+    "formatters": {
+        "default": {
+            "format": "[%(asctime)s] [%(levelname)8s]: %(message)s",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "default",
+            "level": "DEBUG" if DEBUG else "INFO",
+        },
+    },
+    "loggers": {
+        "django": {
+            "level": "INFO",
+        },
+        "django.db.backends": {
+            "level": "DEBUG" if DEBUG else "INFO",
+        },
+        "app": {
+            "level": "DEBUG" if DEBUG else "INFO",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+    },
+}
+
 # Application definition
 
 INSTALLED_APPS = [

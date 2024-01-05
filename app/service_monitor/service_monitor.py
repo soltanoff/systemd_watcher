@@ -1,7 +1,11 @@
+import logging
 import operator
 import subprocess
 
-#import dbus
+import dbus
+
+
+logger = logging.getLogger("app")
 
 
 def catch_dbus_exception(func):
@@ -9,14 +13,13 @@ def catch_dbus_exception(func):
         try:
             return func(*args, **kwargs)
         except dbus.exceptions.DBusException as error:
-            print(error)
+            logger.error("func: %s; args: %r; kwargs %r; error: %r", func.__name__, args, kwargs, error)
             return None
 
     return wrapper
 
 
 class ServiceMonitor(object):
-
     """The D-Bus API of systemd/PID 1: https://www.freedesktop.org/wiki/Software/systemd/dbus/"""
 
     BUS_NAME = "org.freedesktop.systemd1"
@@ -52,17 +55,19 @@ class ServiceMonitor(object):
             service_name = dbus_service_info[0]
             service_status = dbus_service_info[3]
             service_active_stage = dbus_service_info[4]
-            if (status is None or status == service_status) \
-                    and service_name.endswith('.service') \
-                    and '@' not in service_name \
-                    and not service_name.startswith('systemd') \
-                    and service_active_stage != 'exited':
+            if (
+                (status is None or status == service_status)
+                and service_name.endswith('.service')
+                and '@' not in service_name
+                and not service_name.startswith('systemd')
+                and service_active_stage != 'exited'
+            ):
                 yield self.get_service_status(service_name)
 
     @staticmethod
     def get_journalctl_logs(service_name):
         return subprocess.Popen(
-            args='journalctl -u %s' % service_name,
+            args=f'journalctl -u {service_name}',
             shell=True,
             stdout=subprocess.PIPE
         ).communicate()[0].decode('utf-8')
@@ -91,26 +96,14 @@ class ServiceMonitor(object):
         sub_state = str(unit_property['SubState'])
         load_state = str(unit_property['LoadState'])
         status = "{active_state} ({sub_state})".format(active_state=active_state, sub_state=sub_state)
-        service_info = "● {id} - {description}\n" \
-                       "Loaded: {load_state} ({unit_file_state}; vendor preset; {unit_file_preset})\n" \
-                       "Active: {status}\n" \
-                       "Main PID: {pid}\n" \
-                       "Tasks: {tasks_current}\n" \
-                       "Memory: {memory_current}M\n" \
-                       "CPU: {CPU_usage_nsec:.3f}s\n" \
-                       "CGroup: {control_group}\n".format(
-            id=service_name,
-            description=description,
-            load_state=load_state,
-            unit_file_state=unit_property['UnitFileState'],
-            unit_file_preset=unit_property['UnitFilePreset'],
-            status=status,
-            pid=service_property['MainPID'],
-            tasks_current=service_property['TasksCurrent'],
-            memory_current=service_property['MemoryCurrent'] / 1024.0 / 1024.0,
-            CPU_usage_nsec=service_property['CPUUsageNSec'] / 1_000_000_000.0,
-            control_group=service_property['ControlGroup'],
-        )
+        service_info = f"● {service_name} - {description}\n" \
+                       f"Loaded: {load_state} ({unit_property['UnitFileState']}; vendor preset; {unit_property['UnitFilePreset']})\n" \
+                       f"Active: {status}\n" \
+                       f"Main PID: {service_property['MainPID']}\n" \
+                       f"Tasks: {service_property['TasksCurrent']}\n" \
+                       f"Memory: {service_property['MemoryCurrent'] / 1024.0 / 1024.0}M\n" \
+                       f"CPU: {service_property['CPUUsageNSec'] / 1_000_000_000.0:.3f}s\n" \
+                       f"CGroup: {service_property['ControlGroup']}\n"
 
         exec_start = service_property.get('ExecStart')
         if exec_start:
@@ -166,8 +159,8 @@ class ServiceMonitor(object):
 
 if __name__ == '__main__':
     monitor = ServiceMonitor()
-    print(monitor.get_service_status('mysql.service'))
-    print(monitor.get_active_services())
-    print(monitor.get_inactive_services())
-    print(monitor.get_enabled_services())
-    print(monitor.get_failed_services())
+    logger.info(monitor.get_service_status('mysql.service'))
+    logger.info(monitor.get_active_services())
+    logger.info(monitor.get_inactive_services())
+    logger.info(monitor.get_enabled_services())
+    logger.info(monitor.get_failed_services())

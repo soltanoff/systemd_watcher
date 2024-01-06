@@ -47,7 +47,7 @@ new Vue({
                 })
                 .catch((err) => {
                     this.loading = false;
-                    console.log(err);
+                    console.log(err.body);
                 })
         },
         getActiveServices: function() {
@@ -61,7 +61,7 @@ new Vue({
                 })
                 .catch((err) => {
                     this.loading = false;
-                    console.log(err);
+                    console.log(err.body);
                 })
         },
         getInactiveServices: function() {
@@ -75,7 +75,7 @@ new Vue({
                 })
                 .catch((err) => {
                     this.loading = false;
-                    console.log(err);
+                    console.log(err.body);
                 })
         },
         getFavoriteServices: function() {
@@ -88,7 +88,7 @@ new Vue({
                 })
                 .catch((err) => {
                     this.loading = false;
-                    console.log(err);
+                    console.log(err.body);
                 })
         },
         manageFavoriteServices: function(service) {
@@ -98,7 +98,7 @@ new Vue({
                     this.favoriteServices = response.data;
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.log(err.body);
                 })
         },
         getServicesByPickedRadioButton: function(value) {
@@ -125,7 +125,7 @@ new Vue({
                     $("#showFailedServices").modal('show');
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.log(err.body);
                 })
         },
         showServiceLogs: function(service) {
@@ -136,7 +136,7 @@ new Vue({
                     $("#showServiceLogs").modal('show');
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.log(err.body);
                     this.currentServiceLogs = '';
                 })
         },
@@ -150,8 +150,8 @@ new Vue({
                     $("#showServiceStatus").modal('show');
                 })
                 .catch((err) => {
-                    console.log(err);
-                    this.serviceStatus = "Service \"<b>" + service + "</b>\" not started!<br>Error: " + err;
+                    console.log(err.body);
+                    this.serviceStatus = "Service \"<b>" + service + "</b>\" not started!<br>Error: " + err.body.detail;
                     this.getServicesByPickedRadioButton(this.pickedServices);
                     $("#showServiceStatus").modal('show');
                 })
@@ -166,8 +166,8 @@ new Vue({
                     $("#showServiceStatus").modal('show');
                 })
                 .catch((err) => {
-                    console.log(err);
-                    this.serviceStatus = "Service \"<b>" + service + "</b>\" not restarted!<br>Error: " + err;
+                    console.log(err.body);
+                    this.serviceStatus = "Service \"<b>" + service + "</b>\" not restarted!<br>Error: " + err.body.detail;
                     this.getServicesByPickedRadioButton(this.pickedServices);
                     $("#showServiceStatus").modal('show');
                 })
@@ -182,8 +182,8 @@ new Vue({
                     $("#showServiceStatus").modal('show');
                 })
                 .catch((err) => {
-                    console.log(err);
-                    this.serviceStatus = "Service \"<b>" + service + "</b>\" not stopped!<br>Error: " + err;
+                    console.log(err.body);
+                    this.serviceStatus = "Service \"<b>" + service + "</b>\" not stopped!<br>Error: " + err.body.detail;
                     this.getServicesByPickedRadioButton(this.pickedServices);
                     $("#showServiceStatus").modal('show');
                 })

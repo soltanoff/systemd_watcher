@@ -1,4 +1,9 @@
-version: "3.7"
+version: "3.9"
+
+x-systemd-watcher-config: &systemd-watcher-config
+  SECRET_KEY: "mys3cr37k3y"
+  DEBUG: "0"
+  ALLOWED_HOSTS: "*"
 
 services:
   systemd_watcher:
@@ -6,15 +11,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - ./data:/systemd_watcher/data
-      - ./database.db:/db/db.db
+    environment:
+      <<: *systemd-watcher-config
     ports:
       - "8000:8000"
     restart: unless-stopped
 
   nginx:
-    image: nginx:1.13.3
+    image: nginx:latest
     ports:
       - "80:80"
     volumes:

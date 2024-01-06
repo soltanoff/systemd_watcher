@@ -3,6 +3,7 @@ import operator
 import subprocess
 
 import dbus
+from rest_framework.exceptions import APIException
 
 
 logger = logging.getLogger("app")
@@ -12,9 +13,9 @@ def catch_dbus_exception(func):
     def wrapper(*args, **kwargs):
         try:
             return func(*args, **kwargs)
-        except dbus.exceptions.DBusException as error:
+        except Exception as error:
             logger.error("func: %s; args: %r; kwargs %r; error: %r", func.__name__, args, kwargs, error)
-            return None
+            raise APIException(str(error))
 
     return wrapper
 

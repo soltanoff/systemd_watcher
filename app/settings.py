@@ -13,6 +13,8 @@ DEBUG = bool(int(os.getenv("DEBUG", "0")))
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://*.lvh.me,http://*.localhost").split(",")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

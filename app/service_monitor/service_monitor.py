@@ -32,6 +32,8 @@ class ServiceMonitor(object):
     UNIT_INTERFACE = "org.freedesktop.systemd1.Unit"
     SERVICE_UNIT_INTERFACE = "org.freedesktop.systemd1.Service"
 
+    JOURNALCTL_MAX_LINES = 500
+
     __instance = None
 
     def __init__(self):
@@ -65,10 +67,9 @@ class ServiceMonitor(object):
             ):
                 yield self.get_service_status(service_name)
 
-    @staticmethod
-    def get_journalctl_logs(service_name):
+    def get_journalctl_logs(self, service_name):
         return subprocess.Popen(
-            args=f'journalctl -u {service_name}',
+            args=f'journalctl -r -u {service_name} -n {self.JOURNALCTL_MAX_LINES}',
             shell=True,
             stdout=subprocess.PIPE
         ).communicate()[0].decode('utf-8')

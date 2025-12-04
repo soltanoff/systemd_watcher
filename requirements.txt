@@ -1,5 +1,5 @@
 dbus-python==1.4.0
-Django==5.2.9
+Django==6.0
 django-cors-headers==4.9.0
 djangorestframework==3.16.1
 django-debug-toolbar==6.1.0
